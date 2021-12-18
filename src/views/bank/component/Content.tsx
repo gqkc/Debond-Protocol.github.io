@@ -15,6 +15,7 @@ import particle from '../../../assets/particle.gif';
 import TradingInterface from '../../../components/TradingInterface/TradingInterface';
 import ClaimAirdrop from '../../../components/ClaimAirdrop/ClaimAirdrop';
 import Deposit from '../../../components/Deposit/Deposit';
+import { Config } from '../../../config';
 
 const abiERC20 = require('../../../eigma-cash/deployments/ERC20.json');
 const abiSASHTOKEN = require('../../../eigma-cash/deployments/SASHtoken.json');
@@ -46,6 +47,7 @@ type State = {
 type Props = {
   provider: any,
   web3: Web3 | null,
+  config: Config | null,
 }
 
 // const windowNew = window as any;/
@@ -447,7 +449,7 @@ export class Content extends Component<Props, State> {
           setAmount={this.setAmount}
         />
         {/* Pick up airdrop page */}
-        {this.state.sashModalStatus && <ClaimAirdrop provider={this.props.provider} web3={this.props.web3} title="DBIT" status={this.state.sashModalStatus} close={this.handleSashClose} currAddress={this.state.currAddress} />}
+        {this.state.sashModalStatus && <ClaimAirdrop provider={this.props.provider} web3={this.props.web3} config={this.props.config} title="DBIT" status={this.state.sashModalStatus} close={this.handleSashClose} currAddress={this.state.currAddress} />}
         {/* <Modal title="Basic Modal" visible={isModalVisible} onOk={this.handleOk} onCancel={this.handleCancel}> */}
         {/*  <p>You are not qualified for airdrop！</p> */}
         {/*  <p>You can view the airdrop list！<a href="http://localhost:3000/airdrop_list.csv">http://localhost:3000/airdrop_list.csv</a></p> */}

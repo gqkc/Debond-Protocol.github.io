@@ -4,8 +4,7 @@ import {
   Button, Collapse, Table, notification,
 } from 'antd';
 import { UpOutlined, WarningOutlined, RightOutlined } from '@ant-design/icons';
-import Web3 from 'web3';
-import { Contract, ethers } from 'ethers';
+import { Contract, Signer } from 'ethers';
 import styleCommon from '../../common/css/util.module.css';
 import Store from '../../redux/index';
 import styles from './css/header.module.css';
@@ -48,8 +47,7 @@ type State = {
 };
 
 type Props = {
-  provider: (arg0: any) => void,
-  web3: (arg0: Web3) => void,
+  signer: Signer,
 };
 
 const { Panel } = Collapse;
@@ -63,8 +61,6 @@ const genExtra = () => (
 export class HeaderNav extends Component<Props, State> {
   contracts: any;
 
-  walletWithProvider: any;
-
   currentAddress: any;
 
   constructor(props: Props) {
@@ -76,10 +72,6 @@ export class HeaderNav extends Component<Props, State> {
       manageBool: false,
     };
     this.contracts = {};
-  }
-
-  componentDidMount() {
-    this.initData();
   }
 
   handleRefresh = async (e: any) => {
@@ -123,65 +115,10 @@ export class HeaderNav extends Component<Props, State> {
     });
   };
 
-  initData = async () => {
-    let web3Provider;
-    const windowNew = window as any;
-    if (windowNew.ethereum) {
-      web3Provider = windowNew.ethereum;
-      try {
-        // Requesting user Authorization
-        await windowNew.ethereum.enable();
-      } catch (error) {
-        // The user is not authorized
-        console.error('User denied account access');
-        return;
-      }
-    } else if (windowNew.web3) {
-      // original MetaMask Legacy dapp browsers...
-      web3Provider = windowNew.web3.currentProvider;
-    } else {
-      alert('It is detected that there is no metamask plug-in in the current browser!');
-      web3Provider = new Web3.providers.HttpProvider('http://localhost:8545');
-    }
-    const web3 = new Web3(web3Provider);
-
-    // Extract the user from the Meta Mask
-    const provider = new ethers.providers.Web3Provider(web3Provider);
-    const walletWithProvider = provider.getSigner();
-    this.walletWithProvider = walletWithProvider;
-    this.props.provider(walletWithProvider);
-    this.props.web3(web3);
-  };
-
   initWallet = async () => {
     if (this.state.value !== 'Connect Wallet') return;
 
-    let web3Provider;
-    const windowNew = window as any;
-    if (windowNew.ethereum) {
-      // Modern Dapp browsers.
-      web3Provider = windowNew.ethereum;
-      try {
-        await windowNew.ethereum.enable();
-      } catch (error) {
-        console.error('User denied account access');
-        return;
-      }
-    } else if (windowNew.web3) {
-      // Legacy Dapp browsers. Use Mist/Metamask provider.
-      web3Provider = windowNew.web3.currentProvider;
-    } else {
-      // Fallback to localhost.
-      alert('It is detected that there is no Metamask plug-in in the current browser!');
-      web3Provider = new Web3.providers.HttpProvider('http://localhost:8545');
-    }
-    const web3 = new Web3(web3Provider);
-    const provider = new ethers.providers.Web3Provider(web3Provider);
-    const walletWithProvider = provider.getSigner();
-    this.walletWithProvider = walletWithProvider;
-    this.props.provider(walletWithProvider);
-
-    let privateAddress = await walletWithProvider.getAddress();
+    let privateAddress = await this.props.signer.getAddress();
     this.currentAddress = privateAddress;
     if (privateAddress) {
       Store.dispatch({
@@ -202,7 +139,7 @@ export class HeaderNav extends Component<Props, State> {
   };
 
   detailData = async (): Promise<Array<Item>> => {
-    this.contracts.bonds = new Contract('0x5bfa4bc5Db78DC97ffBe2207CB1f4dBB502f8f5b', abiBonds, this.walletWithProvider); // 0x5ee27377c193428BAB9F106549bb6282Dac5FE69
+    this.contracts.bonds = new Contract('0x5bfa4bc5Db78DC97ffBe2207CB1f4dBB502f8f5b', abiBonds, this.props.signer); // 0x5ee27377c193428BAB9F106549bb6282Dac5FE69
     const classList = await this.contracts.bonds.getClassCreated();
     const list: Array<Item> = await Promise.all(classList.map(async (item: any) => {
       const sym = await this.contracts.bonds.getBondSymbol(item);
@@ -268,7 +205,7 @@ export class HeaderNav extends Component<Props, State> {
         </Panel>
       ));
       const item = (
-        <div style={{ position: 'absolute', marginTop: '15px', width: '100%' }}>
+        <div key="buttons_container" style={{ position: 'absolute', marginTop: '15px', width: '100%' }}>
           <div style={{ marginBottom: '10px', display: 'flex', justifyContent: 'space-between' }}>
             <Button style={{ background: 'black', color: 'white' }}>Search...</Button>
             <Button style={{ background: 'black', color: 'white' }} onClick={this.hide}>

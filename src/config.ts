@@ -34,14 +34,15 @@ const configurations: { [env: string]: any } = {
   },
 };
 
-export type ConfigType = {
+export type Config = {
   claim: any[],
   BANKTEST: any[],
   SASHtoken: any[],
   DBGTtoken: any[],
 };
 
-export function getConfigForNet(netId: 'main' | 'ropsten'): ConfigType {
+// New config
+export function getConfigForNet(netId: 'main' | 'ropsten'): Config {
   const config = {
     main: {
       claim: [],

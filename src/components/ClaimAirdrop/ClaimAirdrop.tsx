@@ -9,7 +9,7 @@ import Web3 from 'web3';
 import MyModal from '../Modal/Index';
 import styles from '../../views/bank/css/sash.module.css';
 import '../../views/bank/css/sash.css';
-import { ConfigType, getConfigForNet } from '../../config';
+import { Config } from '../../config';
 import BalanceTree from '../../views/bank/tree/balance-tree';
 
 type Props = {
@@ -19,6 +19,7 @@ type Props = {
   currAddress: string,
   provider: any,
   web3: Web3 | null,
+  config: Config | null,
 }
 
 type Item = { index: string, address: string, amount: string };
@@ -49,7 +50,12 @@ class ClaimAirdrop extends Component<Props, State> {
     super(props);
     this.state = {
       dataSource: [],
-      balanceData: [],
+      balanceData: [
+        { type: 'DBIT BALANCE', num: 0, unit: 'DBIT Ⓘ' },
+        { type: 'DBGT BALANCE', num: 0, unit: 'DBGT Ⓘ' },
+        { type: 'LOCKED DBIT', num: 0, unit: 'DBIT Ⓘ' },
+        { type: 'LOCKED DBGT', num: 0, unit: 'DBGT Ⓘ' },
+      ],
       spinning: false,
     };
   }
@@ -79,9 +85,8 @@ class ClaimAirdrop extends Component<Props, State> {
     if (!this.props.currAddress) {
       return;
     }
-    const newConfig = await this.getConfig();
-    const SASHBalance = await this.getTokenBalance(newConfig?.SASHtoken[0], abiSASHToken);
-    const DBGTBalance = await this.getTokenBalance(newConfig?.DBGTtoken[0], abiDBGTToken);
+    const SASHBalance = await this.getTokenBalance(this.props.config?.SASHtoken[0], abiSASHToken);
+    const DBGTBalance = await this.getTokenBalance(this.props.config?.DBGTtoken[0], abiDBGTToken);
     const balanceData = [
       { type: 'DBIT BALANCE', num: SASHBalance.balance.toNumber(), unit: 'DBIT Ⓘ' },
       { type: 'DBGT BALANCE', num: SASHBalance.locked.toNumber(), unit: 'DBGT Ⓘ' },
@@ -127,16 +132,6 @@ class ClaimAirdrop extends Component<Props, State> {
     return new BalanceTree(result);
   };
 
-  getConfig = async (): Promise<ConfigType | null> => {
-    const netId: string | undefined = await this.props.web3?.eth.net.getNetworkType();
-    console.log('NETWORK_ID: ', netId);
-    if (netId === 'main' || netId === 'ropsten') {
-      return getConfigForNet(netId);
-    }
-    console.error('Unsupported Ethereum network! Please, make sure you are on Main or Ropsten net.');
-    return null;
-  };
-
   refresh = async () => {
     this.setState({
       spinning: true,
@@ -172,8 +167,7 @@ class ClaimAirdrop extends Component<Props, State> {
     // const root = tree.getHexRoot();
     const proof0 = tree.getProof(idx, address, BigNumber.from(amount || 0));
     // const node = BalanceTree.toNode(idx, address, BigNumber.from(amount));
-    const newConfig = await this.getConfig();
-    const claimContract = new Contract(newConfig?.claim[0], abiClaim, this.props.provider);
+    const claimContract = new Contract(this.props.config?.claim[0], abiClaim, this.props.provider);
 
     try {
       const hasClaimed = await claimContract.isClaimed(idx);
@@ -211,7 +205,7 @@ class ClaimAirdrop extends Component<Props, State> {
   };
 
   renderBalance = () => this.state.balanceData.map(({ num, type, unit }, i) => (
-    <Col className={styles.item} span={12} key={i}>
+    <Col className={styles.item} span={12} key={type}>
       <h3 className={styles.item_title}>{type}</h3>
       <p className={styles.amount}>
         {num}

@@ -14,10 +14,12 @@ import { Footers } from './components/footer/Footer';
 import styles from './views/bank/css/bank.module.css';
 import Info from './views/info/Info';
 import Loan from './views/Loan/Loan';
+import { Config, getConfigForNet } from './config';
 
 type State = {
   provider: any,
   web3: Web3 | null,
+  config: Config | null,
 };
 
 type Props = any;
@@ -29,14 +31,25 @@ export class App extends Component<Props, State> {
     this.state = {
       provider: null,
       web3: null,
+      config: null,
     };
   }
 
   componentDidMount() {
-    this.initData();
+    this.initWeb3Provider().then((provider: any) => {
+      const web3 = new Web3(provider);
+      const web3Provider = new ethers.providers.Web3Provider(provider);
+      this.getConfig(web3).then((config: Config | null) => {
+        this.setState({
+          web3,
+          provider: web3Provider.getSigner(),
+          config,
+        });
+      });
+    });
   }
 
-  initData = async () => {
+  initWeb3Provider = async (): Promise<any> => {
     let web3Provider;
     const windowNew = window as any;
     if (windowNew.ethereum) {
@@ -47,7 +60,7 @@ export class App extends Component<Props, State> {
       } catch (error) {
         // The user is not authorized
         console.error('User denied account access');
-        return;
+        return null;
       }
     } else if (windowNew.web3) {
       // original MetaMask Legacy dapp browsers...
@@ -56,34 +69,21 @@ export class App extends Component<Props, State> {
       alert('It is detected that there is no metamask plug-in in the current browser!');
       web3Provider = new Web3.providers.HttpProvider('http://localhost:8545');
     }
-    const web3 = new Web3(web3Provider);
-
-    // Extract the user from the Meta Mask
-    const provider = new ethers.providers.Web3Provider(web3Provider);
-    const walletWithProvider = provider.getSigner();
-    // this.walletWithProvider = walletWithProvider;
-    // this.props.provider(walletWithProvider);
-    // this.props.web3(web3);
-    this.setState({
-      provider: walletWithProvider,
-      web3,
-    });
+    return web3Provider;
   };
 
-  setProvider = (provider: any) => {
-    this.setState({
-      provider,
-    });
-  };
-
-  setWeb3 = (web3: Web3) => {
-    this.setState({
-      web3,
-    });
+  getConfig = async (web3: Web3 | null): Promise<Config | null> => {
+    const netId: string | undefined = await web3?.eth.net.getNetworkType();
+    console.log('NETWORK_ID: ', netId);
+    if (netId === 'main' || netId === 'ropsten') {
+      return getConfigForNet(netId);
+    }
+    console.error('Unsupported Ethereum network! Please, make sure you are on Main or Ropsten net.');
+    return null;
   };
 
   render() {
-    if (this.state.web3 && this.state.provider) {
+    if (this.state.web3 && this.state.provider && this.state.config) {
       return (
         <Layout className="container_main">
           <Content>
@@ -93,23 +93,23 @@ export class App extends Component<Props, State> {
                   <Info />
                 </Route>
                 <Route path="/bank">
-                  <div className={styles.header}><HeaderNav provider={this.setProvider} web3={this.setWeb3} /></div>
-                  <Banks provider={this.state.provider} web3={this.state.web3} />
+                  <div className={styles.header}><HeaderNav signer={this.state.provider} /></div>
+                  <Banks provider={this.state.provider} web3={this.state.web3} config={this.state.config} />
                 </Route>
                 <Route path="/gov">
-                  <div className={styles.header}><HeaderNav provider={this.setProvider} web3={this.setWeb3} /></div>
-                  <Gov provider={this.state.provider} web3={this.state.web3} />
+                  <div className={styles.header}><HeaderNav signer={this.state.provider} /></div>
+                  <Gov provider={this.state.provider} web3={this.state.web3} config={this.state.config} />
                 </Route>
                 <Route path="/bonds">
-                  <div className={styles.header}><HeaderNav provider={this.setProvider} web3={this.setWeb3} /></div>
-                  <Bonds provider={this.setProvider} />
+                  <div className={styles.header}><HeaderNav signer={this.state.provider} /></div>
+                  <Bonds provider={this.state.provider} />
                 </Route>
                 <Route path="/loan">
-                  <div className={styles.header}><HeaderNav provider={this.setProvider} web3={this.setWeb3} /></div>
+                  <div className={styles.header}><HeaderNav signer={this.state.provider} /></div>
                   <Loan provider={this.state.provider} />
                 </Route>
                 <Route path="/ref">
-                  <div className={styles.header}><HeaderNav provider={this.setProvider} web3={this.setWeb3} /></div>
+                  <div className={styles.header}><HeaderNav signer={this.state.provider} /></div>
                   <Ref provider={this.state.provider} />
                 </Route>
               </Switch>
@@ -119,6 +119,7 @@ export class App extends Component<Props, State> {
         </Layout>
       );
     }
+    // TODO: add UI
     return null;
   }
 }

@@ -13,7 +13,7 @@ import cir1 from '../../../assets/circ1.png';
 import trian from '../../../assets/trian.png';
 import particle from '../../../assets/particle.gif';
 import BuySGMBond from './BuySGMBond';
-import config from '../../../config';
+import config, { Config } from '../../../config';
 
 type IMyComponentState = {
   currentPrice: string;
@@ -34,6 +34,7 @@ type IMyComponentState = {
 type IMyComponentProps = {
   provider: any,
   web3: Web3 | null,
+  config: Config | null,
 }
 
 export class Content extends React.Component<IMyComponentProps, IMyComponentState> {
@@ -78,7 +79,7 @@ export class Content extends React.Component<IMyComponentProps, IMyComponentStat
   }
 
   componentWillReceiveProps(nextProps: any) {
-    if (this.state.provider != nextProps.provider) {
+    if (this.state.provider !== nextProps.provider) {
       this.init(nextProps.provider);
     }
   }
@@ -272,7 +273,7 @@ export class Content extends React.Component<IMyComponentProps, IMyComponentStat
             close={this.handleBuySgmBondStatus}
             balances={this.state.balance}
           />
-          <ClaimAirdrop provider={this.provider} web3={this.props.web3} title="DBGT" close={this.handleAirdropStatus} status={this.state.claimAirdropStatus} currAddress={this.state.currentAddress} />
+          <ClaimAirdrop provider={this.provider} web3={this.props.web3} config={this.props.config} title="DBGT" close={this.handleAirdropStatus} status={this.state.claimAirdropStatus} currAddress={this.state.currentAddress} />
           <Proposals ref={this.proposals} provider={this.provider} onStackingDBGT={this.handleStackingDBGT} title="PROPOSALS" close={this.handleProposalsStatus} status={this.state.proposalsStatus} />
           <Module
             disView={disIsModal}
