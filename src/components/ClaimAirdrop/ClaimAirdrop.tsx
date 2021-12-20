@@ -89,8 +89,8 @@ class ClaimAirdrop extends Component<Props, State> {
     const DBGTBalance = await this.getTokenBalance(this.props.config?.DBGTtoken[0], abiDBGTToken);
     const balanceData = [
       { type: 'DBIT BALANCE', num: SASHBalance.balance.toNumber(), unit: 'DBIT Ⓘ' },
-      { type: 'DBGT BALANCE', num: SASHBalance.locked.toNumber(), unit: 'DBGT Ⓘ' },
-      { type: 'LOCKED DBIT', num: DBGTBalance.balance.toNumber(), unit: 'DBIT Ⓘ' },
+      { type: 'LOCKED DBIT', num: SASHBalance.locked.toNumber(), unit: 'DBIT Ⓘ' },
+      { type: 'DBGT BALANCE', num: DBGTBalance.balance.toNumber(), unit: 'DBGT Ⓘ' },
       { type: 'LOCKED DBGT', num: DBGTBalance.locked.toNumber(), unit: 'DBGT Ⓘ' },
     ];
 
