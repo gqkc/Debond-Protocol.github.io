@@ -1,3 +1,6 @@
+// the following configuration are for  hecoInfo.
+// TODO: add also the multicall contract for the function call.
+
 const configurations: { [env: string]: any } = {
   development: {
     externalTokens: {
