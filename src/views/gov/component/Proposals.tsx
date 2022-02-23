@@ -89,7 +89,7 @@ class Proposals extends Component<Props> {
       detail: '',
     },
     currentIndex: 0,
-    dataSource: [],
+    dataSource: [] as any[],
   };
 
   public getData = async () => {

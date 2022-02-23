@@ -325,7 +325,7 @@ class SelectModal extends Component<Props> {
       });
       return;
     }
-    const abi = require('@/eigma-cash/deployments/SASHtoken.json');
+    const abi = require('../../eigma-cash/deployments/SASHtoken.json');
     if (this.props.provider && currentAddress) {
       const SASHTOKEN = new Contract(currentAddress, abi, this.props.provider);
       const unit = `1${'0'.repeat(50)}`;

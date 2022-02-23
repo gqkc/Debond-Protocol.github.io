@@ -26,13 +26,13 @@ class Info extends Component {
    * Ref the alias
    * */
   ref = {
-    seeMore: { current: null },
-    erc3475: { current: null },
-    future: { current: null },
-    debond: { current: null },
-    wallet: { current: null },
-    dex: { current: null },
-    nav: { current: null },
+    seeMore: { current: null as any},
+    erc3475: { current: null as any},
+    future: { current: null as any},
+    debond: { current: null as any},
+    wallet: { current: null as any},
+    dex: { current: null as any},
+    nav: { current: null as any},
   };
 
   state = {

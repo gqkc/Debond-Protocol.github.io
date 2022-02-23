@@ -19,7 +19,7 @@ class CreateModal extends Component<Props> {
     stepDueDate: 0,
     currentDate: Date.now(),
     redate: 0,
-    currentDateFormat: null,
+    currentDateFormat: null as any,
   };
 
   componentDidMount() {
