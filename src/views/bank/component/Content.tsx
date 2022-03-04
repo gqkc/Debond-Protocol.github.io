@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
 import { BigNumber, Contract, utils } from 'ethers';
-import { notification, Input } from 'antd';
+import { Input, notification, Layout } from 'antd';
 import { WarningOutlined } from '@ant-design/icons';
 import Web3 from 'web3';
 import MyModal from '../../../components/Modal/Index';
-import { getDisplayBalance, getBalance, handleBalance } from '../../../eigma-cash/format_util';
+import { getBalance, getDisplayBalance, handleBalance } from '../../../eigma-cash/format_util';
 import config from '../../../config-production';
 import { Module } from './Module';
 import styles from '../css/bank.module.css';
 import buySashBond from '../css/buySashBond.module.css';
-import cir from '../../../assets/cir.png';
-import cir1 from '../../../assets/circ1.png';
-import particle from '../../../assets/particle.gif';
 import TradingInterface from '../../../components/TradingInterface/TradingInterface';
 import ClaimAirdrop from '../../../components/ClaimAirdrop/ClaimAirdrop';
 import Deposit from '../../../components/Deposit/Deposit';
@@ -40,9 +37,9 @@ type State = {
   sashModalStatus: boolean,
   depositStatus: boolean,
   isApprove: boolean,
-  currAddress:string,
+  currAddress: string,
   bondSpinning: boolean,
-  depositType:string
+  depositType: string
 }
 type Props = {
   provider: any,
@@ -158,7 +155,7 @@ export class Content extends Component<Props, State> {
       return;
     }
 
-    handleBalance().then((res: { chainId: number, balance: string, address: string}) => {
+    handleBalance().then((res: { chainId: number, balance: string, address: string }) => {
       this.setState({
         allBalance: getBalance(BigNumber.from(res.balance)),
       });
@@ -353,52 +350,28 @@ export class Content extends Component<Props, State> {
     } = this.state;
     return (
       <div>
-        <div className={styles.title}>DBIT</div>
-        <div className={styles.img_container}>
-          <div className={styles.img_base}>
-            <img src={particle} width="320px" height="320px" alt="" />
-            <div className={styles.img_1}>
-              <img src={cir} width="140px" height="140px" alt="" />
-            </div>
-            <div className={styles.img_2}>
-              <img src={cir} width="5px" height="5px" alt="" />
-            </div>
-            <div className={styles.img_3}>
-              <img src={cir1} width="10px" height="10px" alt="" />
-            </div>
-          </div>
+        <div className={styles.title}>Stake tokens for DBIT Bonds</div>
+        <div>
+          <Module
+            disView={disIsModal}
+            provider={this.provider}
+            closeView={this.handleDisCancel}
+            openView={this.handleDisOk}
+            contracts={this.contracts}
+          />
         </div>
+
         <div className={styles.buts}>
+          {/*
           <div className={styles.but1} onClick={this.deposit}>
-            {/* <div className={styles.but1} onClick={this.deposit1}> */}
             <span>Stake for DBIT Bonds</span>
           </div>
+          */}
           <div className={styles.but1} onClick={this.deposit1} style={{ marginTop: 20 }}>
             <span>Buy DBIT Bonds</span>
           </div>
           <div onClick={this.claimAirdrop} className={styles.but1} style={{ margin: '20px 0' }}>
             <span>Claim Airdrop</span>
-          </div>
-          <div className={styles.but2}>
-            <span>Bond Index Info</span>
-          </div>
-          <div className={styles.but3}>
-            <span>DBIT current price</span>
-            <span className={styles.price} style={{ color: '#AC930B' }}>
-              $
-              {currentPrice}
-            </span>
-          </div>
-          <div className={styles.but3}>
-            <span>DBIT Supply</span>
-            <span className={styles.price} style={{ color: '#5998E0' }}>{totalSupply}</span>
-          </div>
-          <div className={styles.but3}>
-            <span>DBIT minting cost</span>
-            <span className={styles.price} style={{ color: '#CC93D3' }}>
-              $
-              {mintingCost}
-            </span>
           </div>
         </div>
         {/* <UnderConstructionModal visible={this.state.visible} onCancel={this.onCancel} /> */}
@@ -431,7 +404,9 @@ export class Content extends Component<Props, State> {
               size="small"
               suffix={this.state.currencyType}
               value={this.state.stepSize}
-              onChange={(e) => { this.setState({ stepSize: Number(e.target.value) }); }}
+              onChange={(e) => {
+                this.setState({ stepSize: Number(e.target.value) });
+              }}
             />
           </TradingInterface>
         </MyModal>
@@ -449,21 +424,45 @@ export class Content extends Component<Props, State> {
           setAmount={this.setAmount}
         />
         {/* Pick up airdrop page */}
-        {this.state.sashModalStatus && <ClaimAirdrop provider={this.props.provider} web3={this.props.web3} config={this.props.config} title="DBIT" status={this.state.sashModalStatus} close={this.handleSashClose} currAddress={this.state.currAddress} />}
+        {this.state.sashModalStatus && (
+          <ClaimAirdrop
+            provider={this.props.provider}
+            web3={this.props.web3}
+            config={this.props.config}
+            title="DBIT"
+            status={this.state.sashModalStatus}
+            close={this.handleSashClose}
+            currAddress={this.state.currAddress}
+          />
+        )}
         {/* <Modal title="Basic Modal" visible={isModalVisible} onOk={this.handleOk} onCancel={this.handleCancel}> */}
         {/*  <p>You are not qualified for airdrop！</p> */}
         {/*  <p>You can view the airdrop list！<a href="http://localhost:3000/airdrop_list.csv">http://localhost:3000/airdrop_list.csv</a></p> */}
         {/* </Modal> */}
-        <div>
-          <Module
-            disView={disIsModal}
-            provider={this.provider}
-            closeView={this.handleDisCancel}
-            openView={this.handleDisOk}
-            contracts={this.contracts}
-          />
-        </div>
 
+        <Layout.Footer>
+          <div className={styles.but2}>
+            <span>Bond Index Info</span>
+          </div>
+          <div className={styles.but3}>
+            <span>DBIT current price</span>
+            <span className={styles.price} style={{ color: '#AC930B' }}>
+              $
+              {currentPrice}
+            </span>
+          </div>
+          <div className={styles.but3}>
+            <span>DBIT Supply</span>
+            <span className={styles.price} style={{ color: '#5998E0' }}>{totalSupply}</span>
+          </div>
+          <div className={styles.but3}>
+            <span>DBIT minting cost</span>
+            <span className={styles.price} style={{ color: '#CC93D3' }}>
+              $
+              {mintingCost}
+            </span>
+          </div>
+        </Layout.Footer>
       </div>
     );
   }

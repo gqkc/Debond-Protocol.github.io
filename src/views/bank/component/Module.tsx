@@ -13,24 +13,24 @@ import { Refresh, Close } from '../../../components/Icon/Icon';
 import Deposit from '../../../components/Deposit/Deposit';
 
 type IMyComponentState = {
-    value: string;
-    isModalVisible: boolean;
-    disabled: boolean;
-    amount: number;
-    isApprove: boolean;
-    provider: any;
-    currencyType:any,
-    stepSize:number,
-    spinning: boolean,
-    depositStatus:boolean,
-    rangStepSize:number,
+  value: string;
+  isModalVisible: boolean;
+  disabled: boolean;
+  amount: number;
+  isApprove: boolean;
+  provider: any;
+  currencyType: any,
+  stepSize: number,
+  spinning: boolean,
+  depositStatus: boolean,
+  rangStepSize: number,
 }
 type IMyComponentProps = {
-    disView: boolean,
-    closeView: any,
-    openView: any,
-    contracts: any,
-    provider: any
+  disView: boolean,
+  closeView: any,
+  openView: any,
+  contracts: any,
+  provider: any
 }
 const renderTitle = (title: string) => (
   <span>
@@ -46,7 +46,7 @@ const renderItem = (title: string, count: number) => ({
         justifyContent: 'space-between',
       }}
     >
-      <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/2502.png" alt="BNB" width={25} height={25} />
+      <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/2502.png" alt="BNB" width={25} height={25}/>
       {title}
       <span>
         {count}
@@ -61,6 +61,7 @@ const options = [
     options: [renderItem('BNB', 10000), renderItem('USDT', 10600), renderItem('MDX', 10600)],
   },
 ];
+
 export class Module extends React.Component<IMyComponentProps, IMyComponentState> {
   public provider: any;
 
@@ -202,7 +203,7 @@ export class Module extends React.Component<IMyComponentProps, IMyComponentState
     });
   };
 
-  public handleCurrency = (event:any, i:number, type:string) => {
+  public handleCurrency = (event: any, i: number, type: string) => {
     this.setState({
       currencyType: type,
     });
@@ -231,51 +232,55 @@ export class Module extends React.Component<IMyComponentProps, IMyComponentState
     this.setSpinning(false);
   };
 
+  conditionalTradingInterface = () => {
+    let tradingInterface;
+    if (this.provider) {
+      tradingInterface = (
+        <TradingInterface
+          ref={this.Child}
+          provider={this.provider}
+          type="bank"
+          depositChange={this.handleDeposit}
+          currencyType={this.state.currencyType}
+          changeCurrency={this.handleCurrency}
+          rangeChange={this.handleRangeChange}
+          stepSize={this.state.rangStepSize}
+          refresh
+        >
+          {/*   <span className={`${buySashBond.money} ${buySashBond.block}`}>(2.1ETH    412.32SASH   IN USD $ 16524.12)</span>
+                        <span className={`${buySashBond.proportion} ${buySashBond.block}`}>{this.state.stepSize}%</span>
+                        <span className={`${buySashBond.currencyNum} ${buySashBond.block}`}>{0}<span className={buySashBond.currencyType}>{this.state.currencyType}</span></span>
+                       */}
+          <span className={`${buySashBond.money} ${buySashBond.block}`}>(IN USD $ 16524.12)</span>
+          <span className={`${buySashBond.proportion} ${buySashBond.block}`}>
+            {this.state.stepSize}
+            %
+          </span>
+          <Input
+            size="small"
+            suffix={this.state.currencyType}
+            value={this.state.rangStepSize}
+            onChange={(e) => {
+              const val = Number(e.target.value);
+              if (isNaN(val)) e.target.value = String(0);
+              if (Number(e.target.value) > 100) e.target.value = String(100);
+              if (Number(e.target.value) < 0) e.target.value = String(0);
+              this.setState({ stepSize: Number(e.target.value) });
+            }}
+          />
+        </TradingInterface>
+      );
+    } else {
+      tradingInterface = <div>Not connected</div>;
+    }
+    return tradingInterface;
+  }
+
   public render() {
     const { value, isApprove } = this.state;
     return (
       <div>
-        <MyModal
-          onCancel={this.props.closeView}
-          visible={this.props.disView}
-          spinning={this.state.spinning}
-          refresh={this.refresh}
-          title="STAKE TOKEN FOR DBIT BOND"
-        >
-          <TradingInterface
-            ref={this.Child}
-            provider={this.provider}
-            type="bank"
-            depositChange={this.handleDeposit}
-            currencyType={this.state.currencyType}
-            changeCurrency={this.handleCurrency}
-            rangeChange={this.handleRangeChange}
-            stepSize={this.state.rangStepSize}
-            refresh
-          >
-            {/*   <span className={`${buySashBond.money} ${buySashBond.block}`}>(2.1ETH    412.32SASH   IN USD $ 16524.12)</span>
-                        <span className={`${buySashBond.proportion} ${buySashBond.block}`}>{this.state.stepSize}%</span>
-                        <span className={`${buySashBond.currencyNum} ${buySashBond.block}`}>{0}<span className={buySashBond.currencyType}>{this.state.currencyType}</span></span>
-                       */}
-            <span className={`${buySashBond.money} ${buySashBond.block}`}>(IN USD $ 16524.12)</span>
-            <span className={`${buySashBond.proportion} ${buySashBond.block}`}>
-              {this.state.stepSize}
-              %
-            </span>
-            <Input
-              size="small"
-              suffix={this.state.currencyType}
-              value={this.state.rangStepSize}
-              onChange={(e) => {
-                const val = Number(e.target.value);
-                if (isNaN(val)) e.target.value = String(0);
-                if (Number(e.target.value) > 100) e.target.value = String(100);
-                if (Number(e.target.value) < 0) e.target.value = String(0);
-                this.setState({ stepSize: Number(e.target.value) });
-              }}
-            />
-          </TradingInterface>
-        </MyModal>
+        {this.conditionalTradingInterface()}
 
         {/* <Modal title="Deposit for SASH" visible={this.props.disView} footer={null} onOk={this.props.openView} onCancel={this.props.closeView}>
                     <div className={styles.search}>

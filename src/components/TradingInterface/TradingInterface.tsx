@@ -628,6 +628,14 @@ class TradingInterface extends Component<Props> {
     return (
       <div className={`${TradingStyles.content} buyDbitBond_wrap`} style={{ position: 'relative' }}>
         {/* INPUT DOM  */}
+        {
+          this.props.type && this.props.type == 'loan' ? (
+            <Button className={`${TradingStyles.btn} ${TradingStyles.deposit}}`} onClick={this.onTrustee}>
+              <span className={TradingStyles.text}>TRUSTEE</span>
+              <IconFont type="icon-xiangxiajiantou" />
+            </Button>
+          ) : this.getBankButton()
+        }
         <Loading loading={this.state.loading} />
         <div className={TradingStyles.input}>
           <h1 className={TradingStyles.title}>INPUT Ⓘ</h1>
@@ -655,14 +663,6 @@ class TradingInterface extends Component<Props> {
                     <IconFont type="icon-xiangxiajiantou" />
                   </Button>
                 )
-            }
-            {
-              this.props.type && this.props.type == 'loan' ? (
-                <Button className={`${TradingStyles.btn} ${TradingStyles.deposit}}`} onClick={this.onTrustee}>
-                  <span className={TradingStyles.text}>TRUSTEE</span>
-                  <IconFont type="icon-xiangxiajiantou" />
-                </Button>
-              ) : this.getBankButton()
             }
           </Space>
         </div>
