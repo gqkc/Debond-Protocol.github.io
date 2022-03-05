@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Layout } from 'antd';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Layout, Menu } from 'antd';
+import {
+  BrowserRouter as Router, Link, Route, Switch,
+} from 'react-router-dom';
 import Web3 from 'web3';
 import { ethers } from 'ethers';
 import { Bank as Banks } from './views/bank/Bank';
@@ -84,38 +86,75 @@ export class App extends Component<Props, State> {
 
   render() {
     return (
-      <Layout className="container_main">
-        <Content>
-          <Router basename="/">
+      <Router>
+        <Layout className="container_main">
+          <Layout.Header style={{
+            position: 'absolute', zIndex: 1, width: '100%', backgroundColor: 'transparent',
+          }}
+          >
+            <Menu theme="dark" mode="horizontal" style={{ backgroundColor: 'transparent' }}>
+              <div className={styles.header}>
+                <HeaderNav
+                  signer={this.state.provider}/>
+              </div>
+            </Menu>
+          </Layout.Header>
+          <Layout.Sider className="sider" style={{fontFamily: 'Inter', backgroundColor: 'transparent', marginTop: 150 }}>
+            <Menu
+              theme="dark"
+              defaultSelectedKeys={['1']}
+              mode="inline"
+              style={{ color: '#7A7A7A', backgroundColor: 'transparent' }}
+            >
+              <Menu.Item key="1">
+                <Link to="/bank">
+                  <span>Bank</span>
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="2">
+                <Link to="/gov">
+                  <span>Gov</span>
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="3">
+                <Link to="/bonds">
+                  <span>Bonds</span>
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="4">
+                <Link to="/loan">
+                  <span>Loan</span>
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="5">
+                <Link to="/ref">
+                  <span>Ref</span>
+                </Link>
+              </Menu.Item>
+            </Menu>
+          </Layout.Sider>
+          <Content style={{ padding: '0 0px', marginTop: 150 }}>
             <Switch>
-              <Route path="/" exact>
-                <Info />
-              </Route>
               <Route path="/bank">
-                <div className={styles.header}><HeaderNav signer={this.state.provider} /></div>
-                <Banks provider={this.state.provider} web3={this.state.web3} config={this.state.config} />
+                <Banks provider={this.state.provider} web3={this.state.web3} config={this.state.config}/>
               </Route>
               <Route path="/gov">
-                <div className={styles.header}><HeaderNav signer={this.state.provider} /></div>
-                <Gov provider={this.state.provider} web3={this.state.web3} config={this.state.config} />
+                <Gov provider={this.state.provider} web3={this.state.web3} config={this.state.config}/>
               </Route>
               <Route path="/bonds">
-                <div className={styles.header}><HeaderNav signer={this.state.provider} /></div>
-                <Bonds provider={this.state.provider} />
+                <Bonds provider={this.state.provider}/>
               </Route>
               <Route path="/loan">
-                <div className={styles.header}><HeaderNav signer={this.state.provider} /></div>
-                <Loan provider={this.state.provider} />
+                <Loan provider={this.state.provider}/>
               </Route>
               <Route path="/ref">
-                <div className={styles.header}><HeaderNav signer={this.state.provider} /></div>
-                <Ref provider={this.state.provider} />
+                <Ref provider={this.state.provider}/>
               </Route>
             </Switch>
-            <Footers />
-          </Router>
-        </Content>
-      </Layout>
+            <Footers/>
+          </Content>
+        </Layout>
+      </Router>
     );
   }
 }
