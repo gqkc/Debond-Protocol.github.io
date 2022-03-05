@@ -99,60 +99,68 @@ export class App extends Component<Props, State> {
               </div>
             </Menu>
           </Layout.Header>
-          <Layout.Sider className="sider" style={{fontFamily: 'Inter', backgroundColor: 'transparent', marginTop: 150 }}>
-            <Menu
-              theme="dark"
-              defaultSelectedKeys={['1']}
-              mode="inline"
-              style={{ color: '#7A7A7A', backgroundColor: 'transparent' }}
-            >
-              <Menu.Item key="1">
-                <Link to="/bank">
-                  <span>Bank</span>
-                </Link>
-              </Menu.Item>
-              <Menu.Item key="2">
-                <Link to="/gov">
-                  <span>Gov</span>
-                </Link>
-              </Menu.Item>
-              <Menu.Item key="3">
-                <Link to="/bonds">
-                  <span>Bonds</span>
-                </Link>
-              </Menu.Item>
-              <Menu.Item key="4">
-                <Link to="/loan">
-                  <span>Loan</span>
-                </Link>
-              </Menu.Item>
-              <Menu.Item key="5">
-                <Link to="/ref">
-                  <span>Ref</span>
-                </Link>
-              </Menu.Item>
-            </Menu>
-          </Layout.Sider>
-          <Content style={{ padding: '0 0px', marginTop: 150 }}>
-            <Switch>
-              <Route path="/bank">
-                <Banks provider={this.state.provider} web3={this.state.web3} config={this.state.config}/>
-              </Route>
-              <Route path="/gov">
-                <Gov provider={this.state.provider} web3={this.state.web3} config={this.state.config}/>
-              </Route>
-              <Route path="/bonds">
-                <Bonds provider={this.state.provider}/>
-              </Route>
-              <Route path="/loan">
-                <Loan provider={this.state.provider}/>
-              </Route>
-              <Route path="/ref">
-                <Ref provider={this.state.provider}/>
-              </Route>
-            </Switch>
-            <Footers/>
-          </Content>
+          <Layout className="container_main">
+            <Layout.Sider
+              className="sider"
+              style={{ fontFamily: 'Inter', backgroundColor: 'transparent', marginTop: 150 }}>
+              <Menu
+                theme="dark"
+                defaultSelectedKeys={['1']}
+                mode="inline"
+                style={{ color: '#7A7A7A', backgroundColor: 'transparent' }}
+              >
+                <Menu.Item key="1">
+                  <Link to="/bank">
+                    <span>Bank</span>
+                  </Link>
+                </Menu.Item>
+                <Menu.Item key="2">
+                  <Link to="/gov">
+                    <span>Gov</span>
+                  </Link>
+                </Menu.Item>
+                <Menu.Item key="3">
+                  <Link to="/bonds">
+                    <span>Bonds</span>
+                  </Link>
+                </Menu.Item>
+                <Menu.Item key="4">
+                  <Link to="/loan">
+                    <span>Loan</span>
+                  </Link>
+                </Menu.Item>
+                <Menu.Item key="5">
+                  <Link to="/ref">
+                    <span>Ref</span>
+                  </Link>
+                </Menu.Item>
+              </Menu>
+            </Layout.Sider>
+            <Content style={{ padding: '0 0px', marginTop: 150 }}>
+              <Switch>
+                <Route path="/bank">
+                  <Banks provider={this.state.provider} web3={this.state.web3} config={this.state.config}/>
+                </Route>
+                <Route path="/gov">
+                  <Gov provider={this.state.provider} web3={this.state.web3} config={this.state.config}/>
+                </Route>
+                <Route path="/bonds">
+                  <Bonds provider={this.state.provider}/>
+                </Route>
+                <Route path="/loan">
+                  <Loan provider={this.state.provider}/>
+                </Route>
+                <Route path="/ref">
+                  <Ref provider={this.state.provider}/>
+                </Route>
+              </Switch>
+            </Content>
+            <Layout.Sider style={{ backgroundColor: 'transparent', marginTop: 150 }}>
+              <div id='right-sider'></div>
+            </Layout.Sider>
+          </Layout>
+          <Footers/>
+
         </Layout>
       </Router>
     );
