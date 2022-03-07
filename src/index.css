@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+
 @font-face {
   font-family: Arial-BoldMT;
   src: url("/src/assets/fonts/Arial-BoldMT.otf");
@@ -21,8 +23,13 @@ code {
     monospace;
 }
 .container_main{
-  background: linear-gradient(#000 60%, #1f1c20) !important;
+  /*background: linear-gradient(#000 60%, #1f1c20) !important;*/
+  background: #000000;
+  border-top: 1px white !important;
+  border: solid #000;
+  border-width: 0 1px;
 }
+
 @media (max-width: 750px) {
   .container_main{
     background: linear-gradient( #000 90%,#1E195C ) !important;

@@ -7,6 +7,7 @@ import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import styles from '../header/css/header.module.css';
 import { Refresh, Close } from '../Icon/Icon';
 import UnderConstructionModal from '../UnderConstructionModal/UnderConstructionModal';
+import BondBalance from './BondBalance';
 
 const { Panel } = Collapse;
 
@@ -95,43 +96,45 @@ class Wallet extends Component<any, any> {
           </Space>
         </div>
         {/* bondsBalance */}
-        <div className={styles.bondsBalance}>
-          <Button
-            className={this.props.manageBool ? `${styles.headerButton} ${styles.an}` : styles.headerButton}
-            onClick={this.props.searchBonds}
-            // onClick={this.handleStatus}
-            icon={this.props.manageBool && (
-            <>
-              <Close
-                style={{ position: 'absolute', right: '-25px', width: '20px' }}
-                close={this.props.hide}
-              />
-              <Refresh
-                style={{}}
-                refresh={(e: any) => {
-                  this.handleRefresh(e);
+        <BondBalance>
+          <div className={styles.bondsBalance}>
+            <Button
+              className={this.props.manageBool ? `${styles.headerButton} ${styles.an}` : styles.headerButton}
+              onClick={this.props.searchBonds}
+              // onClick={this.handleStatus}
+              icon={this.props.manageBool && (
+                <>
+                  <Close
+                    style={{ position: 'absolute', right: '-25px', width: '20px' }}
+                    close={this.props.hide}
+                  />
+                  <Refresh
+                    style={{}}
+                    refresh={(e: any) => {
+                      this.handleRefresh(e);
+                    }}
+                  />
+                </>
+              ) || (
+                <DownOutlined style={{
+                  marginLeft: 5,
+                  marginTop: 5,
+                  transition: '.5s',
                 }}
-              />
-            </>
-            ) || (
-            <DownOutlined style={{
-              marginLeft: 5,
-              marginTop: 5,
-              transition: '.5s',
-            }}
-            />
-            )}
-          >
-            Bonds Balances
-          </Button>
-          {this.props.manageBool ? (
-            <div style={{ width: '100%', position: 'relative', zIndex: 2 }}>
-              {this.props.panels}
-            </div>
-          ) : null}
-        </div>
+                />
+              )}
+            >
+              Bonds Balances
+            </Button>
+            {this.props.manageBool ? (
+              <div style={{ width: '100%', position: 'relative', zIndex: 2 }}>
+                {this.props.panels}
+              </div>
+            ) : null}
+          </div>
+        </BondBalance>
 
-        <UnderConstructionModal visible={this.state.status} onCancel={this.handleStatus} />
+        <UnderConstructionModal visible={this.state.status} onCancel={this.handleStatus}/>
 
       </div>
     );

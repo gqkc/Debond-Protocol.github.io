@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+
 .App {
   text-align: center;
 }
@@ -35,4 +37,48 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.sider .ant-menu-item {
+  font-family: 'Inter', sans-serif !important;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  border-top: 1px solid;
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+  height: 80px !important;
+  display: flex;
+  align-items: center;
+  padding-left: 40px !important;
+  border: 0.5px solid #656565;
+}
+
+.sider {
+  border-right: 0.5px solid #656565;
+  width: 280px !important;
+  min-width: 280px !important;
+  max-width: 280px !important;
+
+}
+
+.sider .ant-menu-item-selected {
+  background-color: #403af4 !important;
+}
+
+.ant-layout-header .ant-menu {
+  line-height: 3px !important;
+}
+
+.ant-layout-header {
+  background-color: transparent;
+  border-bottom: 0.5px solid #656565;
+}
+
+.ant-layout {
+  background-color: black;
+}
+
+.ant-menu {
+  border: none;
 }

@@ -179,7 +179,7 @@ class ClaimAirdrop extends Component<Props, State> {
         });
         return;
       }
-    } catch (e) {
+    } catch (e:any) {
       notification.open({
         message: 'Transaction has failed',
         description: e.message,
@@ -195,7 +195,7 @@ class ClaimAirdrop extends Component<Props, State> {
           icon: <CheckCircleOutlined style={{ color: 'green' }} />,
         });
       }
-    } catch (e) {
+    } catch (e:any) {
       notification.open({
         message: 'Transaction has failed',
         description: e.message,

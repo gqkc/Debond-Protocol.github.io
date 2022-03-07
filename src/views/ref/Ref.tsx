@@ -20,8 +20,8 @@ export default class Ref extends Component<Props> {
   state = {
     provider: this.props.provider,
     maxsize: 20,
-    dataSource: [],
-    refData: [],
+    dataSource: [] as any[],
+    refData: [] as any[],
   };
 
   public handleToggle = () => {
