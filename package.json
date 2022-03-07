@@ -69,7 +69,7 @@
     "style-loader": "1.3.0",
     "terser-webpack-plugin": "4.2.3",
     "ts-pnp": "1.2.0",
-    "typescript": "^4.5.5",
+    "typescript": "4.2.4",
     "url-loader": "4.1.1",
     "web-vitals": "1.1.1",
     "web3": "1.3.5",
@@ -78,8 +78,7 @@
     "webpack-manifest-plugin": "2.2.0",
     "workbox-webpack-plugin": "5.1.4",
     "yarn": "^1.22.17",
-    "react-scripts": "^4.0.0",
-    "@babel/plugin-proposal-private-property-in-object": "^7.16.7"
+    "react-scripts": "^4.0.0"
   },
   "scripts": {
     "predeploy": "DISABLE_ESLINT_PLUGIN=true npm run build",
@@ -90,7 +89,7 @@
     "lint-fix": "node node_modules/eslint/bin/eslint.js src --fix",
     "test": "node scripts/info.js",
     "tsc": "tsc",
-    "startts":"DISABLE_ESLINT_PLUGIN=true  react-scripts start"
+    "startts": "DISABLE_ESLINT_PLUGIN=true  react-scripts start"
   },
   "eslintConfig": {
     "extends": [
@@ -114,6 +113,7 @@
     "@types/react": "17.0.37",
     "@typescript-eslint/eslint-plugin": "5.4.0",
     "@typescript-eslint/parser": "5.4.0",
+    "eslint": "8.3.0",
     "eslint-config-airbnb": "19.0.1",
     "eslint-import-resolver-typescript": "2.5.0",
     "eslint-plugin-import": "2.25.3",
@@ -179,9 +179,5 @@
     "presets": [
       "react-app"
     ]
-  },
-  "resolutions": {
-    "//": "See https://github.com/facebook/create-react-app/issues/11773",
-    "react-error-overlay": "6.0.9"
   }
 }

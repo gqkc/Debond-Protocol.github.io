@@ -131,6 +131,7 @@ export class HeaderNav extends Component<Props, State> {
       this.setState({
         value: privateAddress,
       });
+      this.setState({manageBool: true});
     }
     const list = await this.detailData();
     if (list) {

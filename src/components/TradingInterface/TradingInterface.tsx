@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Button, Col, Input, notification, Row, Slider, Space, Tabs,
+  Button, Col, Input, notification, Progress, Row, Slider, Space, Tabs,
 } from 'antd';
 import { createFromIconfontCN, WarningOutlined } from '@ant-design/icons';
 import Scrollbars from 'react-custom-scrollbars';
@@ -12,6 +12,7 @@ import { bar_styles, make_bar } from '../../eigma-cash/format_util';
 import configTest from '../../config-test';
 import config from '../../config-production';
 import Loading from '../loading/index';
+import './css/trading.css';
 
 import BondsTest from '../../eigma-cash/deployments/bondsTest.json';
 
@@ -43,7 +44,7 @@ type Props = {
   stepSize: any,
   provider?: any,
   type?: string,
-  depositType?:string
+  depositType?: string
 }
 
 class TradingInterface extends Component<Props> {
@@ -220,14 +221,10 @@ class TradingInterface extends Component<Props> {
             ETA:
             {eta}
           </span>
-          <span className={TradingStyles.progress}>
-            PROGRESS :
-            <span
-              style={{ color: '#fff' }}
-            >
-              {make_bar(progress, bar_styles[8], 20, 20).str}
-            </span>
-          </span>
+          <div className={TradingStyles.progress}>
+
+              <Progress percent={progress} strokeColor="white" />
+          </div>
         </p>
       );
     }
@@ -380,8 +377,8 @@ class TradingInterface extends Component<Props> {
         </Col>
       </Row>
       {
-          type == 'FIXED RATE' && this.handleFixedRateContent() || this.handleVariableRateContent()
-        }
+        type == 'FIXED RATE' && this.handleFixedRateContent() || this.handleVariableRateContent()
+      }
       <Button
         type="default"
         size="large"
@@ -574,11 +571,12 @@ class TradingInterface extends Component<Props> {
           depositApproved: true,
         });
         await this.deposit(this.props.depositType as string, address2);
-      } catch (e) {}
+      } catch (e) {
+      }
     }
   };
 
-  public deposit = async (type:string, address:string) => {
+  public deposit = async (type: string, address: string) => {
     const BANK = new Contract(address, bankTest, this.props.provider);
     if (type == 'buy') {
       await BANK.handleBuy(type, this.state.currencyType, 20, this.state.stepSize);
@@ -628,7 +626,7 @@ class TradingInterface extends Component<Props> {
     const { type } = this.props;
     return (
 
-      <div className={`${TradingStyles.content} buyDbitBond_wrap`} >
+      <div className={`${TradingStyles.content} buyDbitBond_wrap`}>
         {/* INPUT DOM  */}
         <Loading loading={this.state.loading} />
         <div className={TradingStyles.input}>
@@ -673,33 +671,33 @@ class TradingInterface extends Component<Props> {
         {
           this.state.outputStatus
           && (
-          <div className={TradingStyles.output}>
-            <h3 className={TradingStyles.title}>OUTPUT Ⓘ</h3>
-            {type == 'loan' && this.handleLoanOutputTemp() || (
-            <>
-              <OTable ref={this.outputData} refresh={this.state.outputStatus} provider={this.provider} />
-              <div className={TradingStyles.currentItem}>
-                <Row className={TradingStyles.con}>
-                  <Col span={3}>
-                    <span>IN TOTAL:</span>
-                  </Col>
-                  <Col span={3}>
-                    <span>12-11-2021</span>
-                  </Col>
-                  <Col span={12}>
-                    <span>{make_bar(30, bar_styles[8], 25, 25).str}</span>
-                  </Col>
-                  <Col span={3}>
-                    <span>9324.24</span>
-                  </Col>
-                  <Col span={3}>
-                    <span>$ 9515</span>
-                  </Col>
-                </Row>
-              </div>
-            </>
-            )}
-          </div>
+            <div className={TradingStyles.output}>
+              <h3 className={TradingStyles.title}>OUTPUT Ⓘ</h3>
+              {type == 'loan' && this.handleLoanOutputTemp() || (
+                <>
+                  <OTable ref={this.outputData} refresh={this.state.outputStatus} provider={this.provider} />
+                  <div className={TradingStyles.currentItem}>
+                    <Row className={TradingStyles.con}>
+                      <Col span={3}>
+                        <span>IN TOTAL:</span>
+                      </Col>
+                      <Col span={3}>
+                        <span>12-11-2021</span>
+                      </Col>
+                      <Col span={12}>
+                        <span>{make_bar(30, bar_styles[8], 25, 25).str}</span>
+                      </Col>
+                      <Col span={3}>
+                        <span>9324.24</span>
+                      </Col>
+                      <Col span={3}>
+                        <span>$ 9515</span>
+                      </Col>
+                    </Row>
+                  </div>
+                </>
+              )}
+            </div>
           )
           || null
         }

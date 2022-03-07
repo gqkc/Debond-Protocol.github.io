@@ -9,11 +9,12 @@ import { Bank as Banks } from './views/bank/Bank';
 import { Gov } from './views/gov/Gov';
 import { Bonds } from './views/bonds/Bonds';
 import Ref from './views/ref/Ref';
-import './App.css';
 import 'antd/dist/antd.css';
 import { HeaderNav } from './components/header/HeaderNav';
 import { Footers } from './components/footer/Footer';
 import styles from './views/bank/css/bank.module.css';
+import './App.css';
+
 import Info from './views/info/Info';
 import Loan from './views/Loan/Loan';
 import { Config, getConfigForNet } from './config';
@@ -87,12 +88,12 @@ export class App extends Component<Props, State> {
   render() {
     return (
       <Router>
-        <Layout className="container_main">
+        <Layout className="container">
           <Layout.Header style={{
-            position: 'absolute', zIndex: 1, width: '100%', backgroundColor: 'transparent',
+            position: 'relative',width: '100%', height:150
           }}
           >
-            <Menu theme="dark" mode="horizontal" style={{ backgroundColor: 'transparent' }}>
+            <Menu  mode="horizontal" style={{ backgroundColor: 'transparent' }}>
               <div className={styles.header}>
                 <HeaderNav
                   signer={this.state.provider}/>
@@ -102,7 +103,7 @@ export class App extends Component<Props, State> {
           <Layout className="container_main">
             <Layout.Sider
               className="sider"
-              style={{ fontFamily: 'Inter', backgroundColor: 'transparent', marginTop: 150 }}>
+              style={{ fontFamily: 'Inter', backgroundColor: 'transparent'}}>
               <Menu
                 theme="dark"
                 defaultSelectedKeys={['1']}
@@ -136,7 +137,7 @@ export class App extends Component<Props, State> {
                 </Menu.Item>
               </Menu>
             </Layout.Sider>
-            <Content style={{ padding: '0 0px', marginTop: 150, marginLeft: 30, marginRight: 50 }}>
+            <Content style={{ padding: '0 0px',  marginLeft: 30, marginRight: 50 }}>
               <Switch>
                 <Route path="/bank">
                   <Banks provider={this.state.provider} web3={this.state.web3} config={this.state.config}/>
@@ -155,7 +156,7 @@ export class App extends Component<Props, State> {
                 </Route>
               </Switch>
             </Content>
-            <Layout.Sider style={{ backgroundColor: 'transparent', marginTop: 150 }}>
+            <Layout.Sider style={{ backgroundColor: 'transparent'}}>
               <div id='right-sider'></div>
             </Layout.Sider>
           </Layout>
