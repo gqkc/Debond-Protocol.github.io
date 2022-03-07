@@ -136,7 +136,7 @@ export class App extends Component<Props, State> {
                 </Menu.Item>
               </Menu>
             </Layout.Sider>
-            <Content style={{ padding: '0 0px', marginTop: 150 }}>
+            <Content style={{ padding: '0 0px', marginTop: 150, marginLeft: 30, marginRight: 50 }}>
               <Switch>
                 <Route path="/bank">
                   <Banks provider={this.state.provider} web3={this.state.web3} config={this.state.config}/>

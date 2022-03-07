@@ -1,7 +1,7 @@
 .content{
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    color:white;
 }
 .content .title{
     color: #fff;
@@ -45,6 +45,7 @@
 .deposit{
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+    align-self:flex-end;
 }
 .deposit.disabled{
     background: #164385 !important;
@@ -54,9 +55,7 @@
     background: #403af4 !important;
     border: 1px solid #403af4 !important;
     height: 40px !important;
-    display: flex !important;
-    justify-content: center;
-    align-items: center;
+
 }
 .text{
     font-size: 20px;
@@ -66,7 +65,7 @@
     font-weight: bold;
 }
 .currType{
-    width: 60% !important;
+    width: 100% !important;
     margin: 0 auto;
     border: 2px solid #403af4;
     min-height: 150px;

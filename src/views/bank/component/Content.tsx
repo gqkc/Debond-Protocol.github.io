@@ -262,7 +262,7 @@ export class Content extends Component<Props, State> {
       notification.open({
         message: 'No wallet connected',
         description: 'Please click the Connect Wallet button first',
-        icon: <WarningOutlined style={{ color: '#faad14' }} />,
+        icon: <WarningOutlined style={{ color: '#faad14' }}/>,
       });
       return;
     }
@@ -298,8 +298,8 @@ export class Content extends Component<Props, State> {
             this.externalTokens.USDT[0]],
           { value: utils.parseEther(this.state.amount) },
         ).then((res: any) => {
-          console.log(res);
-        }, (error: any) => console.error(error));
+        console.log(res);
+      }, (error: any) => console.error(error));
     } else if (value === 'USDT') {
       amount = parseFloat(this.state.amount);
       amount *= 10 ** 5;
@@ -350,7 +350,6 @@ export class Content extends Component<Props, State> {
     } = this.state;
     return (
       <div>
-        <div className={styles.title}>Stake tokens for DBIT Bonds</div>
         <div>
           <Module
             disView={disIsModal}
@@ -440,8 +439,13 @@ export class Content extends Component<Props, State> {
         {/*  <p>You can view the airdrop list！<a href="http://localhost:3000/airdrop_list.csv">http://localhost:3000/airdrop_list.csv</a></p> */}
         {/* </Modal> */}
 
-        <Layout.Footer>
-          <div className={styles.but2}>
+        <Layout.Footer style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-around',
+          backgroundColor: 'transparent',
+        }}>
+          <div className={styles.but3}>
             <span>Bond Index Info</span>
           </div>
           <div className={styles.but3}>

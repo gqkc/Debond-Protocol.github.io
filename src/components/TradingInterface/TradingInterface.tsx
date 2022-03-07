@@ -200,6 +200,7 @@ class TradingInterface extends Component<Props> {
   public renderCurr = () => this.state.inputData.map(({ eta, name, progress }, i) => {
     if (this.props.type !== 'bonds') {
       return (
+
         <p
           key={i}
           data-key={i}
@@ -626,16 +627,9 @@ class TradingInterface extends Component<Props> {
   render() {
     const { type } = this.props;
     return (
-      <div className={`${TradingStyles.content} buyDbitBond_wrap`} style={{ position: 'relative' }}>
+
+      <div className={`${TradingStyles.content} buyDbitBond_wrap`} >
         {/* INPUT DOM  */}
-        {
-          this.props.type && this.props.type == 'loan' ? (
-            <Button className={`${TradingStyles.btn} ${TradingStyles.deposit}}`} onClick={this.onTrustee}>
-              <span className={TradingStyles.text}>TRUSTEE</span>
-              <IconFont type="icon-xiangxiajiantou" />
-            </Button>
-          ) : this.getBankButton()
-        }
         <Loading loading={this.state.loading} />
         <div className={TradingStyles.input}>
           <h1 className={TradingStyles.title}>INPUT Ⓘ</h1>
@@ -663,6 +657,14 @@ class TradingInterface extends Component<Props> {
                     <IconFont type="icon-xiangxiajiantou" />
                   </Button>
                 )
+            }
+            {
+              this.props.type && this.props.type == 'loan' ? (
+                <Button className={`${TradingStyles.btn} ${TradingStyles.deposit}}`} onClick={this.onTrustee}>
+                  <span className={TradingStyles.text}>TRUSTEE</span>
+                  <IconFont type="icon-xiangxiajiantou" />
+                </Button>
+              ) : this.getBankButton()
             }
           </Space>
         </div>

@@ -1,48 +1,55 @@
 .content {
   /*height: 800px;*/
   /* background: black; */
-  display: flex;
-  justify-content: center;
+  /*display: flex;*/
+  /*justify-content: center;*/
   margin-top: 10vh;
-  margin-bottom: 1rem;
+  /*margin-bottom: 1rem;*/
 }
-.header{
+
+.header {
   padding-top: 0px;
 }
+
 .title {
   color: #ffffff;
-  font-family: "Secular One", Sans-serif;
-  font-size: 33px;
-  font-weight: 500;
-  letter-spacing: 10px;
-  text-align: center;
+  font-family: "Inter", Sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  font-style: normal;
   margin-bottom: 30px;
 }
+
 .img_container {
   width: 320px;
   height: 320px;
 }
+
 .img_base {
   position: relative;
 }
+
 .img_1 {
   position: absolute;
   z-index: 1;
   right: 90px;
   top: 90px;
 }
+
 .img_2 {
   position: absolute;
   z-index: 1;
   right: 157px;
   top: 1px;
 }
+
 .img_3 {
   position: absolute;
   z-index: 1;
   right: 157px;
   bottom: 10px;
 }
+
 .buts {
   display: flex;
   flex-direction: column;
@@ -51,25 +58,39 @@
   margin-top: 30px;
   font-family: "Secular One", Sans-serif;
 }
+
 .but1,
 .but2,
 .but3 {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  /* identical to box height, or 267% */
+  letter-spacing: 0.004em;
+  text-transform: uppercase;
+  color: #FFFFFF;
+}
+
+.but1 {
   width: 268px;
-	height: 40px;
-	line-height: 34px;
+  height: 40px;
+  line-height: 34px;
   cursor: pointer;
   color: #fff;
   text-align: center;
-	border: solid 3px #fff;
-	letter-spacing: 1px;
-	font-size: 18px;
+  border: solid 3px #fff;
+  letter-spacing: 1px;
+  font-size: 18px;
   font-weight: bolder;
-	font-family: Arial-BoldMT;
+  font-family: Arial-BoldMT;
 }
+
 .but2 {
   background-color: #fff;
   color: black;
 }
+
 .but3 {
   font-size: 12px;
   padding: 5px;
@@ -80,50 +101,78 @@
   border-top: 0;
 
 }
+
+
 .price {
-  position: absolute;
-  right: 20px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 32px;
+  margin-left: 5px;
 }
-.disButton{
+
+.disButton {
   display: flex;
-    justify-content: space-evenly;
+  justify-content: space-evenly;
 }
-.buttona{
+
+.buttona {
   width: 200px;
   height: 42px;
   border-radius: 10px;
   cursor: pointer;
   background: antiquewhite;
 }
-.buttona:hover{
+
+.buttona:hover {
   background-color: #ceb695;
 }
-.search{
+
+.search {
   margin-left: 15%;
 }
-.ant-input .amountNmuber{
+
+.ant-input .amountNmuber {
   width: 300px;
   margin-bottom: 10px;
   height: 35px;
 }
+
 @media screen and (min-width: 220px) and (max-width: 750px) {
   .item1,
   .item2 {
     display: none;
   }
-  .header{
+
+  .header {
     margin-bottom: 130px;
   }
-  .buttona{
+
+  .buttona {
     width: 130px;
   }
-  .content{
+
+  .content {
     margin-bottom: 3rem;
   }
 }
+
 @media screen and (min-width: 750px) {
   .item4 {
     display: none;
   }
 
+}
+
+.headerTitle {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 146%;
+  /* identical to box height, or 29px */
+
+  /* Debond Grey */
+  color: #DFDFDF;
 }

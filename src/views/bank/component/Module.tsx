@@ -11,6 +11,7 @@ import buySashBond from '../css/buySashBond.module.css';
 import MyModal from '../../../components/Modal/Index';
 import { Refresh, Close } from '../../../components/Icon/Icon';
 import Deposit from '../../../components/Deposit/Deposit';
+import { Header } from 'antd/lib/layout/layout';
 
 type IMyComponentState = {
   value: string;
@@ -280,6 +281,7 @@ export class Module extends React.Component<IMyComponentProps, IMyComponentState
     const { value, isApprove } = this.state;
     return (
       <div>
+        <div className={styles.headerTitle}>Stake Tokens for DBIT Bonds</div>
         {this.conditionalTradingInterface()}
 
         {/* <Modal title="Deposit for SASH" visible={this.props.disView} footer={null} onOk={this.props.openView} onCancel={this.props.closeView}>

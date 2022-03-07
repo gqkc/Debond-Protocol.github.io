@@ -14,6 +14,7 @@ import Wallet from '../Wallet/Wallet';
 import './css/header.css';
 import Loading from '../loading';
 import logo from '../../assets/logo-black.png';
+import logoUnder from '../../assets/logounder.png';
 
 const columns = [
   {
@@ -255,6 +256,7 @@ export class HeaderNav extends Component<Props, State> {
         <div className={styles.logoimg}>
           {/* <img src={logo} alt="" className={styles.pcLogo}/> <img src={logo} alt="" className={styles.mobileLogo}/> */}
           <img alt="logo" src={logo} width="200px" style={{ position: 'absolute', left: 0 }} />
+          <div className={styles.logounder}>— Decentralised Bonds</div>
         </div>
         <div className={styles.links}>
           {/* <Links /> */}
