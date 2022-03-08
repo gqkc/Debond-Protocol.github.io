@@ -55,11 +55,22 @@
 }
 
 .sider {
-  border-right: 0.5px solid #656565;
-  width: 280px !important;
-  min-width: 280px !important;
-  max-width: 280px !important;
+  background-color: transparent!important;
+}
+.rightSider{
+  background-color: transparent;
+  width: 300px !important;
+  border-left: 0.5px solid #656565;
+  flex:initial;
+  max-width: 300px!important;
+  min-width: 300px!important;
+}
 
+.leftSider{
+  border-right: 0.5px solid #656565;
+  width: 280px ;
+  max-width: 280px;
+  min-width: 280px;
 }
 
 .sider .ant-menu-item-selected {

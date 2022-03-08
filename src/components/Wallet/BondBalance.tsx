@@ -8,6 +8,6 @@ const BondBalance = ({ children }: { children?: any }) => {
   });
 
   return domReady
-    ? ReactDOM.createPortal(children, document.getElementById('right-sider')!) : null;
+    ? ReactDOM.createPortal(children, document.getElementById('rightSider')!) : null;
 };
 export default BondBalance;

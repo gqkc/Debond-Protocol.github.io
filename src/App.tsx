@@ -102,7 +102,7 @@ export class App extends Component<Props, State> {
           </Layout.Header>
           <Layout className="container_main">
             <Layout.Sider
-              className="sider"
+              className="sider leftSider"
               style={{ fontFamily: 'Inter', backgroundColor: 'transparent'}}>
               <Menu
                 theme="dark"
@@ -156,12 +156,10 @@ export class App extends Component<Props, State> {
                 </Route>
               </Switch>
             </Content>
-            <Layout.Sider style={{ backgroundColor: 'transparent'}}>
-              <div id='right-sider'></div>
+            <Layout.Sider className={"rightSider"} >
+              <div id='rightSider'></div>
             </Layout.Sider>
           </Layout>
-          <Footers/>
-
         </Layout>
       </Router>
     );
