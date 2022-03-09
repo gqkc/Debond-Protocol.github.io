@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-  Button, Col, Input, notification, Progress, Row, Slider, Space, Tabs,
+  Button, Col, Divider, Input, Menu, notification, Progress, Row, Slider, Space, Tabs,
 } from 'antd';
 import {createFromIconfontCN, WarningOutlined} from '@ant-design/icons';
 import Scrollbars from 'react-custom-scrollbars';
@@ -15,6 +15,7 @@ import Loading from '../loading/index';
 import './css/trading.css';
 
 import BondsTest from '../../eigma-cash/deployments/bondsTest.json';
+import styles from "../../views/bank/css/bank.module.css";
 
 const address = config.externalTokens.dexTest[0];
 const address2 = config.externalTokens.TEST[0];
@@ -47,7 +48,7 @@ type Props = {
   depositType?: string,
   maxValue?: number,
   inputChange?: any,
-  buyStake?:string,
+  buyStake?: string,
 }
 
 class TradingInterface extends Component<Props> {
@@ -625,7 +626,7 @@ class TradingInterface extends Component<Props> {
             await this.deposit(this.props.depositType as string, address2);
           }}
         >
-          <span >DEPOSIT</span>
+          <span>DEPOSIT</span>
         </Button>
       );
     }
@@ -679,10 +680,16 @@ class TradingInterface extends Component<Props> {
 
   render() {
     const {type} = this.props;
+    const outputTitle = `${this.props.buyStake} Tokens`
     return (
 
       <div className={`${TradingStyles.content} buyDbitBond_wrap`}>
-        {this.getBankButton()}
+        <div style={{display:"flex", justifyContent:"space-between"}}>
+          <div className={TradingStyles.headerTitle}>{this.props.buyStake} Tokens for DBIT Bonds</div>
+          {this.getBankButton()}
+
+        </div>
+        <Divider/>
 
         {/* INPUT DOM  */}
         <Loading loading={this.state.loading}/>
@@ -702,11 +709,13 @@ class TradingInterface extends Component<Props> {
                 : (
                   <div>
                     <h3 className={TradingStyles.titleOutput}>OUTPUT</h3>
-                    <Button className={` ${TradingStyles.view}`} onClick={this.handleView}>
-                      <span className={TradingStyles.text}>{this.props.buyStake} Tokens</span>
-                      <IconFont type="icon-xiangxiajiantou"/>
-                    </Button>
-                    {this.renderOutput()}
+                    <Menu mode="inline" className={TradingStyles.menuOutput}>
+                      <Menu.SubMenu title={outputTitle} onTitleClick={this.handleView}>
+                        <Menu.Item className={TradingStyles.subOutput}>
+                          {this.renderOutput()}
+                        </Menu.Item>
+                      </Menu.SubMenu>
+                    </Menu>
                   </div>
                 )
             }

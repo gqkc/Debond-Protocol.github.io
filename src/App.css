@@ -88,9 +88,9 @@
 
 .leftSider{
   border-right: 0.5px solid #656565;
-  width: 280px !important;
-  max-width: 280px!important;
-  min-width: 280px!important;
+  width: 20%!important;
+  max-width: 20%!important;
+  min-width: 10%!important;
 }
 
 .sider .ant-menu-item-selected {
@@ -124,7 +124,7 @@
   line-height: 146%;
   /* or 15px */
   text-align: center;
-  text-transform: uppercase;
+  /*text-transform: uppercase;*/
 
   /* Debond Grey */
   color: #DFDFDF;

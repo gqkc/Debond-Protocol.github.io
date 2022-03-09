@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Modal, Button, AutoComplete, Input, Alert,
+  Modal, Button, AutoComplete, Input, Alert, Divider,
 } from 'antd';
 import {BigNumber, Contract, utils} from 'ethers';
 import styles from '../css/bank.module.css';
@@ -277,7 +277,6 @@ export class Module extends React.Component<IMyComponentProps, IMyComponentState
     const {value, isApprove} = this.state;
     return (
       <div>
-        <div className={styles.headerTitle}>{this.props.buyStake} Tokens for DBIT Bonds</div>
         {this.conditionalTradingInterface()}
 
         {/* <Modal title="Deposit for SASH" visible={this.props.disView} footer={null} onOk={this.props.openView} onCancel={this.props.closeView}>

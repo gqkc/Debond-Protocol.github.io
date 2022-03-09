@@ -409,6 +409,7 @@ export class Content extends Component<Props, State> {
           flexDirection: 'row',
           justifyContent: 'space-around',
           backgroundColor: 'transparent',
+          paddingBottom:2
         }}>
           <div className={styles.but3}>
             <span>Bond Index Info</span>
