@@ -2,16 +2,16 @@ import React from 'react';
 import {
   Modal, Button, AutoComplete, Input,
 } from 'antd';
-import { BigNumber, Contract, utils } from 'ethers';
+import {BigNumber, Contract, utils} from 'ethers';
 import styles from '../css/bank.module.css';
-import { getDisplayBalance } from '../../../eigma-cash/format_util';
+import {getDisplayBalance} from '../../../eigma-cash/format_util';
 import config from '../../../config';
 import TradingInterface from '../../../components/TradingInterface/TradingInterface';
 import buySashBond from '../css/buySashBond.module.css';
 import MyModal from '../../../components/Modal/Index';
-import { Refresh, Close } from '../../../components/Icon/Icon';
+import {Refresh, Close} from '../../../components/Icon/Icon';
 import Deposit from '../../../components/Deposit/Deposit';
-import { Header } from 'antd/lib/layout/layout';
+import {Header} from 'antd/lib/layout/layout';
 
 type IMyComponentState = {
   value: string;
@@ -25,6 +25,7 @@ type IMyComponentState = {
   spinning: boolean,
   depositStatus: boolean,
   rangStepSize: number,
+  maxValue: number
 }
 type IMyComponentProps = {
   disView: boolean,
@@ -94,9 +95,10 @@ export class Module extends React.Component<IMyComponentProps, IMyComponentState
       spinning: false,
       depositStatus: false,
       rangStepSize: 0,
+      maxValue: 16524.12
     };
     this.contracts = {};
-    const { externalTokens } = config;
+    const {externalTokens} = config;
     this.externalTokens = externalTokens;
   }
 
@@ -178,9 +180,9 @@ export class Module extends React.Component<IMyComponentProps, IMyComponentState
       alert('No wallet connected');
       return;
     }
-    const { value } = this.state;
+    const {value} = this.state;
     if (value == 'BNB') {
-      var mintingCost = await this.contracts.bank.buySASHBondWithETH(this.currentAddress, '1', [this.externalTokens.BNB[0], this.externalTokens.USDT[0]], { value: utils.parseEther(this.amount) });
+      var mintingCost = await this.contracts.bank.buySASHBondWithETH(this.currentAddress, '1', [this.externalTokens.BNB[0], this.externalTokens.USDT[0]], {value: utils.parseEther(this.amount)});
     } else if (value == 'USDT') {
       var amount: any = parseFloat(this.amount);
       amount *= 10 ** 5;
@@ -220,10 +222,11 @@ export class Module extends React.Component<IMyComponentProps, IMyComponentState
     });
   };
 
-  public handleRangeChange = (val: any) => {
+  public handleRangeChange = (e: any) => {
+    const value = Number(e.target.value);
     this.setState({
-      rangStepSize: val,
-      stepSize: val / 100,
+      rangStepSize: value,
+      stepSize: value/100 ,
     });
   };
 
@@ -246,29 +249,15 @@ export class Module extends React.Component<IMyComponentProps, IMyComponentState
           changeCurrency={this.handleCurrency}
           rangeChange={this.handleRangeChange}
           stepSize={this.state.rangStepSize}
+          maxValue={this.state.maxValue}
+          inputChange={this.handleInputChange}
           refresh
         >
           {/*   <span className={`${buySashBond.money} ${buySashBond.block}`}>(2.1ETH    412.32SASH   IN USD $ 16524.12)</span>
                         <span className={`${buySashBond.proportion} ${buySashBond.block}`}>{this.state.stepSize}%</span>
                         <span className={`${buySashBond.currencyNum} ${buySashBond.block}`}>{0}<span className={buySashBond.currencyType}>{this.state.currencyType}</span></span>
                        */}
-          <span className={`${buySashBond.money} ${buySashBond.block}`}>(IN USD $ 16524.12)</span>
-          <span className={`${buySashBond.proportion} ${buySashBond.block}`}>
-            {this.state.stepSize}
-            %
-          </span>
-          <Input
-            size="small"
-            suffix={this.state.currencyType}
-            value={this.state.rangStepSize}
-            onChange={(e) => {
-              const val = Number(e.target.value);
-              if (isNaN(val)) e.target.value = String(0);
-              if (Number(e.target.value) > 100) e.target.value = String(100);
-              if (Number(e.target.value) < 0) e.target.value = String(0);
-              this.setState({ stepSize: Number(e.target.value) });
-            }}
-          />
+
         </TradingInterface>
       );
     } else {
@@ -277,8 +266,16 @@ export class Module extends React.Component<IMyComponentProps, IMyComponentState
     return tradingInterface;
   }
 
+  handleInputChange = (val: Number) => {
+    let value = Number(val);
+    if (isNaN(value)) value = Number(0);
+    if (Number(value) > 100) value = Number(100);
+    if (Number(value) < 0) value = Number(0);
+    this.setState({stepSize: value});
+  }
+
   public render() {
-    const { value, isApprove } = this.state;
+    const {value, isApprove} = this.state;
     return (
       <div>
         <div className={styles.headerTitle}>Stake Tokens for DBIT Bonds</div>

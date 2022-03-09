@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './table.css';
-import { Table } from 'antd';
+import {Col, Progress, Table} from 'antd';
 import moment from 'moment';
 import { Contract } from 'ethers';
 import { bar_styles, make_bar } from '../../eigma-cash/format_util';
@@ -166,12 +166,12 @@ class Index extends Component<Props> {
           />
           <Table.Column title={<>ETA</>} dataIndex="eta" key="eta" />
           <Table.Column
-            width="50%"
+            width="30%"
             title={<>PROGRESS</>}
             dataIndex="progress"
             key="progress"
             render={(tags) => (
-              make_bar(tags, bar_styles[8], this.state.mobile && 10 || 25, this.state.mobile && 10 || 25).str
+              <Progress percent={tags} strokeColor="white"/>
             )}
           />
           <Table.Column title={<>DBIT</>} dataIndex="sash" key="sash" />

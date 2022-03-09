@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   Button, Col, Input, notification, Progress, Row, Slider, Space, Tabs,
 } from 'antd';
-import { createFromIconfontCN, WarningOutlined } from '@ant-design/icons';
+import {createFromIconfontCN, WarningOutlined} from '@ant-design/icons';
 import Scrollbars from 'react-custom-scrollbars';
-import { BigNumber, Contract, ethers } from 'ethers';
+import {BigNumber, Contract, ethers} from 'ethers';
 import moment from 'moment';
 import TradingStyles from '../../views/bank/css/buySashBond.module.css';
 import OTable from '../OTable/Index';
-import { bar_styles, make_bar } from '../../eigma-cash/format_util';
+import {bar_styles, make_bar} from '../../eigma-cash/format_util';
 import configTest from '../../config-test';
 import config from '../../config-production';
 import Loading from '../loading/index';
@@ -19,7 +19,7 @@ import BondsTest from '../../eigma-cash/deployments/bondsTest.json';
 const address = config.externalTokens.dexTest[0];
 const address2 = config.externalTokens.TEST[0];
 
-const { TabPane } = Tabs;
+const {TabPane} = Tabs;
 
 const bankTest = require('../../eigma-cash/deployments/bankTest.json');
 
@@ -44,7 +44,9 @@ type Props = {
   stepSize: any,
   provider?: any,
   type?: string,
-  depositType?: string
+  depositType?: string,
+  maxValue?: number,
+  inputChange?: any
 }
 
 class TradingInterface extends Component<Props> {
@@ -80,12 +82,12 @@ class TradingInterface extends Component<Props> {
 
   private viewTimer: any;
 
-  private outputData: any = { current: null };
+  private outputData: any = {current: null};
 
   constructor(props: Props | Readonly<Props>) {
     super(props);
     this.provider = ethers.getDefaultProvider('ropsten');
-    const { externalTokens } = configTest;
+    const {externalTokens} = configTest;
     this.externalTokens = externalTokens;
   }
 
@@ -198,7 +200,11 @@ class TradingInterface extends Component<Props> {
     this.handleToggle(event, i, name);
   };
 
-  public renderCurr = () => this.state.inputData.map(({ eta, name, progress }, i) => {
+  inputChange = (val: any) => {
+    this.props.rangeChange(val);
+  };
+
+  public renderCurr = () => this.state.inputData.map(({eta, name, progress}, i) => {
     if (this.props.type !== 'bonds') {
       return (
 
@@ -206,14 +212,13 @@ class TradingInterface extends Component<Props> {
           key={i}
           data-key={i}
           datatype={name}
-          style={{ cursor: 'pointer', background: this.state.currentActive === i && '#403af4' || '#000' }}
+          style={{cursor: 'pointer', background: this.state.currentActive === i && '#403af4' || '#000'}}
           onClick={(event) => {
             this.handleInputClick(event, name, i);
           }}
           className={TradingStyles.item}
         >
           <span className={TradingStyles.name}>
-            <IconFont type="icon-lianjie-copy" />
             {' '}
             {name}
           </span>
@@ -223,7 +228,16 @@ class TradingInterface extends Component<Props> {
           </span>
           <div className={TradingStyles.progress}>
 
-              <Progress percent={progress} strokeColor="white" />
+            <Progress percent={progress} strokeColor="white"/>
+          </div>
+          <div>
+            <Input suffix={name} defaultValue={0} onChange={this.inputChange} size="small"/>
+          </div>
+          <div>
+            0%
+          </div>
+          <div>
+            <span style={{fontSize: 10}}>{this.props.maxValue} USD $</span>
           </div>
         </p>
       );
@@ -233,14 +247,14 @@ class TradingInterface extends Component<Props> {
         key={i}
         data-key={i}
         datatype={name}
-        style={{ cursor: 'pointer', background: this.state.currentActive === i && '#403af4' || '#000' }}
+        style={{cursor: 'pointer', background: this.state.currentActive === i && '#403af4' || '#000'}}
         onClick={(event) => {
           this.handleInputClick(event, name, i);
         }}
         className={TradingStyles.item}
       >
         <span className={TradingStyles.name}>
-          <IconFont type="icon-lianjie-copy" />
+          <IconFont type="icon-lianjie-copy"/>
           {' '}
           {name}
         </span>
@@ -285,7 +299,7 @@ class TradingInterface extends Component<Props> {
   };
 
   public handleValue = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
+    const {name, value} = event.target;
     this.props.onPriceChange(name, value);
     this.setState({
       [name]: value,
@@ -427,7 +441,7 @@ class TradingInterface extends Component<Props> {
           <h3 className={TradingStyles.title}>DUE DATE Ⓘ</h3>
           <Slider
             value={typeof this.state.stepDueDate === 'number' ? this.state.stepDueDate : 0}
-            style={{ width: '50%', margin: '20px auto' }}
+            style={{width: '50%', margin: '20px auto'}}
             onChange={this.handleDueDate}
           />
           <div className={TradingStyles.infos}>
@@ -460,7 +474,7 @@ class TradingInterface extends Component<Props> {
             value={this.state.inTrestReateVal}
             min={0}
             max={200}
-            style={{ width: '50%', margin: '20px auto' }}
+            style={{width: '50%', margin: '20px auto'}}
             tipFormatter={null}
             onChange={this.handleInTrestReateVal}
           />
@@ -512,7 +526,7 @@ class TradingInterface extends Component<Props> {
       </Row>
       <Row className={TradingStyles.slider_wrap}>
         <Col span={24}>
-          <OTable refresh={this.state.outputStatus} />
+          <OTable refresh={this.state.outputStatus}/>
         </Col>
       </Row>
       <Row className={TradingStyles.inTotal}>
@@ -556,7 +570,7 @@ class TradingInterface extends Component<Props> {
       notification.open({
         message: 'No wallet connected',
         description: 'Please click the Connect Wallet button first',
-        icon: <WarningOutlined style={{ color: '#faad14' }} />,
+        icon: <WarningOutlined style={{color: '#faad14'}}/>,
       });
       return;
     }
@@ -595,7 +609,12 @@ class TradingInterface extends Component<Props> {
   };
 
   public getBankButton = () => {
-    if (this.props.type === 'bank' || this.props.type === 'gov') {
+    if (this.props.type && this.props.type == 'loan') {
+      return (<Button className={`${TradingStyles.btn} ${TradingStyles.deposit}}`} onClick={this.onTrustee}>
+        <span className={TradingStyles.text}>TRUSTEE</span>
+        <IconFont type="icon-xiangxiajiantou"/>
+      </Button>)
+    } else if (this.props.type === 'bank' || this.props.type === 'gov') {
       // disabled={this.state.depositStatus}
       return (
         <Button
@@ -606,7 +625,6 @@ class TradingInterface extends Component<Props> {
           }}
         >
           <span className={TradingStyles.text}>DEPOSIT</span>
-          <IconFont type="icon-xiangxiajiantou" />
         </Button>
       );
     }
@@ -617,90 +635,83 @@ class TradingInterface extends Component<Props> {
         onClick={this.onTrustee}
       >
         <span className={TradingStyles.text}>TRUSTEE</span>
-        <IconFont type="icon-xiangxiajiantou" />
+        <IconFont type="icon-xiangxiajiantou"/>
       </Button>
     );
   };
 
+  renderOutput = () => {
+    const {type} = this.props;
+    return (
+      this.state.outputStatus
+      && (
+        <div className={TradingStyles.output}>
+          {type == 'loan' && this.handleLoanOutputTemp() || (
+            <>
+              <OTable ref={this.outputData} refresh={this.state.outputStatus} provider={this.provider}/>
+              <div className={TradingStyles.currentItem}>
+                <Row className={TradingStyles.con}>
+                  <Col span={3}>
+                    <span>IN TOTAL:</span>
+                  </Col>
+                  <Col span={3}>
+                    <span>12-11-2021</span>
+                  </Col>
+                  <Col span={6}>
+                    <Progress percent={30} strokeColor="white"/>
+                  </Col>
+                  <Col span={3}>
+                    <span>9324.24</span>
+                  </Col>
+                  <Col span={3}>
+                    <span>$ 9515</span>
+                  </Col>
+                </Row>
+              </div>
+            </>
+          )}
+        </div>
+      )
+      || null
+    )
+  }
+
   render() {
-    const { type } = this.props;
+    const {type} = this.props;
     return (
 
       <div className={`${TradingStyles.content} buyDbitBond_wrap`}>
+        {this.getBankButton()}
+
         {/* INPUT DOM  */}
-        <Loading loading={this.state.loading} />
+        <Loading loading={this.state.loading}/>
         <div className={TradingStyles.input}>
           <h1 className={TradingStyles.title}>INPUT Ⓘ</h1>
           <Scrollbars className={TradingStyles.currType}>
             {this.renderCurr()}
           </Scrollbars>
-          <Slider
-            value={typeof this.props.stepSize === 'number' ? this.props.stepSize : 0}
-            min={0}
-            max={10000}
-            style={{ width: '50%', margin: '20px auto' }}
-            tipFormatter={null}
-            onChange={this.props.rangeChange}
-          />
+
           <div className={TradingStyles.infos}>
             {this.props.children}
           </div>
 
-          <Space size={[0, 0]} className={TradingStyles.btnGroup}>
+          <div className={TradingStyles.btnGroup}>
             {
               this.props.type && this.props.type == 'loan' ? null
                 : (
-                  <Button className={`${TradingStyles.view} ${TradingStyles.btn}`} onClick={this.handleView}>
-                    <span className={TradingStyles.text}>VIEW</span>
-                    <IconFont type="icon-xiangxiajiantou" />
-                  </Button>
+                  <div>
+                    <h3 className={TradingStyles.titleOutput}>OUTPUT</h3>
+                    <Button className={` ${TradingStyles.view}`} onClick={this.handleView}>
+                      <span className={TradingStyles.text}>Buy/Stake Tokens</span>
+                      <IconFont type="icon-xiangxiajiantou"/>
+                    </Button>
+                    {this.renderOutput()}
+                  </div>
                 )
             }
-            {
-              this.props.type && this.props.type == 'loan' ? (
-                <Button className={`${TradingStyles.btn} ${TradingStyles.deposit}}`} onClick={this.onTrustee}>
-                  <span className={TradingStyles.text}>TRUSTEE</span>
-                  <IconFont type="icon-xiangxiajiantou" />
-                </Button>
-              ) : this.getBankButton()
-            }
-          </Space>
+          </div>
         </div>
 
-        {/* OUTPUT DOM */}
-        {
-          this.state.outputStatus
-          && (
-            <div className={TradingStyles.output}>
-              <h3 className={TradingStyles.title}>OUTPUT Ⓘ</h3>
-              {type == 'loan' && this.handleLoanOutputTemp() || (
-                <>
-                  <OTable ref={this.outputData} refresh={this.state.outputStatus} provider={this.provider} />
-                  <div className={TradingStyles.currentItem}>
-                    <Row className={TradingStyles.con}>
-                      <Col span={3}>
-                        <span>IN TOTAL:</span>
-                      </Col>
-                      <Col span={3}>
-                        <span>12-11-2021</span>
-                      </Col>
-                      <Col span={12}>
-                        <span>{make_bar(30, bar_styles[8], 25, 25).str}</span>
-                      </Col>
-                      <Col span={3}>
-                        <span>9324.24</span>
-                      </Col>
-                      <Col span={3}>
-                        <span>$ 9515</span>
-                      </Col>
-                    </Row>
-                  </div>
-                </>
-              )}
-            </div>
-          )
-          || null
-        }
 
       </div>
     );

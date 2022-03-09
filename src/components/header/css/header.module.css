@@ -1,3 +1,4 @@
+
 .header {
     margin: 0 auto;
     display: flex;
@@ -84,7 +85,7 @@
 .collapse {
     position: absolute;
     width: 100%;
-    background-color: black !important;
+    /*background-color: black !important;*/
 }
 
 .headerButton.an {
@@ -106,7 +107,7 @@
 
 .collapse_panel div {
     color: white !important;
-    background: black !important;
+    /*background: black !important;*/
 }
 
 .tables {
@@ -119,7 +120,7 @@
 
 :global .ant-table-thead > tr > th {
     color: white !important;
-    background: black !important;
+    background: transparent !important;
     font-size: 12px !important;
     transform: scale(0.8);
     border-bottom: none !important;
@@ -186,6 +187,18 @@
     font-size: 23px!important;
 }
 
+
+.ant-drawer-body{
+    background-color: black!important;
+    color:white!important;
+}
+.ant-drawer-content{
+    background-color: black!important;
+    color:white!important;
+}
+.ant-drawer-body{
+    background-color: black!important;
+}
 @media screen and (min-width: 220px) and (max-width: 768px) {
 
     .header {

@@ -20,9 +20,22 @@
   flex-direction: column;
   padding: 30px 0;
 }
+.titleOutput {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 146%;
+  /* identical to box height, or 15px */
+  text-transform: uppercase;
+  margin-top:10px;
+  margin-left: 10px;
+  margin-bottom: 0px;
+  color: #EB3468;
+}
 
 .output {
-  border-top: 2px solid #403af4;
+  /*border-top: 2px solid #403af4;*/
 }
 
 .infos {
@@ -46,19 +59,33 @@
 }
 
 .btnGroup {
-  margin: 30px auto;
+  background-color: #1E1D20!important;
+  padding-bottom: 15px;
+  border:1px white;
 }
 
 .btnGroup .view {
-  border-right: 1px solid #707070 !important;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
+  width: 100%;
+  background-color: #1E1D20!important;
+  justify-content: space-between;
+  display: flex;
+  color:white;
+  border:none!important;
 }
 
 .deposit {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   align-self: flex-end;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 10.5px;
+  line-height: 146%;
+  /* or 15px */
+  text-align: center;
+  text-transform: uppercase;
+  width: 147px;
 }
 
 .deposit.disabled {
@@ -89,6 +116,7 @@
   overflow-y: scroll;
   overflow-x: hidden;
   padding: 5px;
+  text-align: center;
 }
 
 .lastName, .min, .max {
@@ -153,7 +181,7 @@
 .currentItem {
   /*width: 80%;*/
   /*margin:0 auto;*/
-  border-top: 2px solid #403af4;
+  /*border-top: 2px solid #403af4;*/
   margin-bottom: -20px;
 }
 

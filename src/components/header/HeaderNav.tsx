@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, {Component} from 'react';
+import {NavLink} from 'react-router-dom';
 import {
   Button, Collapse, Table, notification,
 } from 'antd';
-import { UpOutlined, WarningOutlined, RightOutlined } from '@ant-design/icons';
-import { Contract, Signer } from 'ethers';
+import {UpOutlined, WarningOutlined, RightOutlined} from '@ant-design/icons';
+import {Contract, Signer} from 'ethers';
 import styleCommon from '../../common/css/util.module.css';
 import Store from '../../redux/index';
 import styles from './css/header.module.css';
 import Links from '../Links/index';
-import { getDisplayBalance, roundFun } from '../../eigma-cash/format_util';
+import {getDisplayBalance, roundFun} from '../../eigma-cash/format_util';
 import Wallet from '../Wallet/Wallet';
 import './css/header.css';
 import Loading from '../loading';
@@ -52,12 +52,12 @@ type Props = {
   signer: Signer,
 };
 
-const { Panel } = Collapse;
+const {Panel} = Collapse;
 
 const abiBonds = require('../../eigma-cash/deployments/bonds.json');
 
 const genExtra = () => (
-  <RightOutlined style={{ position: 'absolute', right: 15, bottom: -20 }}/>
+  <RightOutlined style={{position: 'absolute', right: 15, bottom: -20}}/>
 );
 
 export class HeaderNav extends Component<Props, State> {
@@ -107,7 +107,7 @@ export class HeaderNav extends Component<Props, State> {
       notification.open({
         message: 'No wallet connected',
         description: 'Please click the Connect Wallet button first',
-        icon: <WarningOutlined style={{ color: '#faad14' }}/>,
+        icon: <WarningOutlined style={{color: '#faad14'}}/>,
       });
       return;
     }
@@ -188,15 +188,15 @@ export class HeaderNav extends Component<Props, State> {
   }
 
   renderPanels() {
-    const { dataSource } = this.state;
-    const { length } = dataSource;
+    const {dataSource} = this.state;
+    const {length} = dataSource;
     if (length) {
       const panels: any[] = dataSource.map((item: Item, i: number) => (
         <Panel
           header={(
-            <div style={{ display: 'inline' }}>
-              <div style={{ display: 'inline' }}>{dataSource[i].name}</div>
-              <div style={{ float: 'right' }}>{dataSource[i].amount}</div>
+            <div style={{display: 'inline'}}>
+              <div style={{display: 'inline'}}>{dataSource[i].name}</div>
+              <div style={{float: 'right'}}>{dataSource[i].amount}</div>
             </div>
           )}
           extra={genExtra()}
@@ -208,17 +208,17 @@ export class HeaderNav extends Component<Props, State> {
         </Panel>
       ));
       const item = (
-        <div key="buttons_container" style={{ position: 'absolute', marginTop: '15px', width: '100%' }}>
-          <div style={{ marginBottom: '10px', display: 'flex', justifyContent: 'space-between' }}>
-            <Button style={{ background: 'black', color: 'white' }}>Search...</Button>
-            <Button style={{ background: 'black', color: 'white' }} onClick={this.hide}>
+        <div key="buttons_container" style={{position: 'absolute', marginTop: '15px', width: '100%'}}>
+          <div style={{marginBottom: '10px', display: 'flex', justifyContent: 'space-between'}}>
+            <Button>Search...</Button>
+            <Button onClick={this.hide}>
               Hide All...
               <UpOutlined/>
             </Button>
           </div>
           <div>
             <NavLink exact activeClassName={styles.active} to="/bonds/1">
-              <Button style={{ background: 'black', color: 'white', width: '100%' }}>Detailed Infos...</Button>
+              <Button style={{width: '100%'}}>Detailed Infos...</Button>
             </NavLink>
           </div>
         </div>
@@ -243,7 +243,7 @@ export class HeaderNav extends Component<Props, State> {
         className={styles.collapse}
         expandIconPosition="right"
       >
-        <Panel header="SASH" className={styles.collapse_panel} style={{ position: 'relative', height: 200 }} key={1}>
+        <Panel header="SASH" className={styles.collapse_panel} style={{position: 'relative', height: 200}} key={1}>
           <Loading loading={this.state.loading}/>
         </Panel>
       </Collapse>
@@ -256,7 +256,7 @@ export class HeaderNav extends Component<Props, State> {
       <div className={`header ${styles.header} ${styleCommon.flex} ${styleCommon.fl_wrap}`}>
         <div className={styles.logoimg}>
           {/* <img src={logo} alt="" className={styles.pcLogo}/> <img src={logo} alt="" className={styles.mobileLogo}/> */}
-          <img alt="logo" src={logo} width="200px" style={{ position: 'absolute', left: 0 }} />
+          <img alt="logo" src={logo} width="200px" style={{position: 'absolute', left: 0}}/>
           <div className={styles.logounder}>— Decentralised Bonds</div>
         </div>
         <div className={styles.links}>

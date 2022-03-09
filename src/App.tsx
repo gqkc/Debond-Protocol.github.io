@@ -156,9 +156,6 @@ export class App extends Component<Props, State> {
                 </Route>
               </Switch>
             </Content>
-            <Layout.Sider className={"rightSider"} >
-              <div id='rightSider'></div>
-            </Layout.Sider>
           </Layout>
         </Layout>
       </Router>
