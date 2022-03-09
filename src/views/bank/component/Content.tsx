@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BigNumber, Contract, utils } from 'ethers';
-import { Input, notification, Layout } from 'antd';
+import {Input, notification, Layout, Button} from 'antd';
 import { WarningOutlined } from '@ant-design/icons';
 import Web3 from 'web3';
 import MyModal from '../../../components/Modal/Index';
@@ -45,6 +45,7 @@ type Props = {
   provider: any,
   web3: Web3 | null,
   config: Config | null,
+  buyStake:string| "stake",
 }
 
 // const windowNew = window as any;/
@@ -352,11 +353,9 @@ export class Content extends Component<Props, State> {
       <div>
         <div>
           <Module
-            disView={disIsModal}
             provider={this.provider}
-            closeView={this.handleDisCancel}
-            openView={this.handleDisOk}
             contracts={this.contracts}
+            buyStake={this.props.buyStake}
           />
         </div>
 
@@ -366,49 +365,15 @@ export class Content extends Component<Props, State> {
             <span>Stake for DBIT Bonds</span>
           </div>
           */}
-          <div className={styles.but1} onClick={this.deposit1} style={{ marginTop: 20 }}>
+          {/*<div className={styles.but1} onClick={this.deposit1} style={{ marginTop: 20 }}>
             <span>Buy DBIT Bonds</span>
-          </div>
-          <div onClick={this.claimAirdrop} className={styles.but1} style={{ margin: '20px 0' }}>
+          </div>*/}
+          <Button onClick={this.claimAirdrop} className={styles.but1 } style={{ margin: '20px 0' }}>
             <span>Claim Airdrop</span>
-          </div>
+          </Button>
         </div>
         {/* <UnderConstructionModal visible={this.state.visible} onCancel={this.onCancel} /> */}
         {/** Exchange Bond page */}
-        <MyModal
-          visible={this.state.visible}
-          title="BUY DBIT BOND"
-          spinning={this.state.bondSpinning}
-          refresh={this.refreshBond}
-          onCancel={this.onCancel}
-        >
-          <TradingInterface
-            depositType={this.state.depositType}
-            provider={this.provider}
-            depositChange={this.handleDeposit}
-            ref={this.Child}
-            currencyType={this.state.currencyType}
-            changeCurrency={this.handleCurrency}
-            type="bank"
-            rangeChange={this.handleRangeChange}
-            stepSize={this.state.stepSize}
-            refresh
-          >
-            <span className={`${buySashBond.money} ${buySashBond.block}`}>(IN USD $ 16524.12)</span>
-            <span className={`${buySashBond.proportion} ${buySashBond.block}`}>
-              {this.state.stepSize}
-              %
-            </span>
-            <Input
-              size="small"
-              suffix={this.state.currencyType}
-              value={this.state.stepSize}
-              onChange={(e) => {
-                this.setState({ stepSize: Number(e.target.value) });
-              }}
-            />
-          </TradingInterface>
-        </MyModal>
 
         <Deposit
           value={this.state.amount}

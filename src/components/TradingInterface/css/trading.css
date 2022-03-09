@@ -9,10 +9,6 @@
   font-size: 13px;
   line-height: 16px;
 }
-.ant-input-affix-wrapper{
-  width:30% !important;;
-}
-
 .ant-input-suffix{
   font-size: 10px;
 }
@@ -21,6 +17,7 @@
   border:none!important;
   color:white!important;
   border-bottom: 1px dashed #656565!important;
+  width:50% !important;
 }
 .ant-input{
   background-color: transparent!important;

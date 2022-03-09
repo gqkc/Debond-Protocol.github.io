@@ -110,11 +110,18 @@ export class App extends Component<Props, State> {
                 mode="inline"
                 style={{ color: '#7A7A7A', backgroundColor: 'transparent' }}
               >
-                <Menu.Item key="1">
-                  <Link to="/bank">
-                    <span>Bank</span>
-                  </Link>
-                </Menu.Item>
+                <Menu.SubMenu key="1" title="Bank">
+                  <Menu.Item>
+                    <Link to="/stake">
+                      <span>Stake</span>
+                    </Link>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <Link to="/buy">
+                      <span>Buy</span>
+                    </Link>
+                  </Menu.Item>
+                </Menu.SubMenu>
                 <Menu.Item key="2">
                   <Link to="/gov">
                     <span>Gov</span>
@@ -139,8 +146,11 @@ export class App extends Component<Props, State> {
             </Layout.Sider>
             <Content style={{ padding: '0 0px',  marginLeft: 30, marginRight: 50 }}>
               <Switch>
-                <Route path="/bank">
-                  <Banks provider={this.state.provider} web3={this.state.web3} config={this.state.config}/>
+                <Route path="/stake">
+                  <Banks provider={this.state.provider} web3={this.state.web3} config={this.state.config} buyStake="Stake"/>
+                </Route>
+                <Route path="/buy">
+                  <Banks provider={this.state.provider} web3={this.state.web3} config={this.state.config} buyStake="Buy"/>
                 </Route>
                 <Route path="/gov">
                   <Gov provider={this.state.provider} web3={this.state.web3} config={this.state.config}/>

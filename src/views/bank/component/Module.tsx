@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Modal, Button, AutoComplete, Input,
+  Modal, Button, AutoComplete, Input, Alert,
 } from 'antd';
 import {BigNumber, Contract, utils} from 'ethers';
 import styles from '../css/bank.module.css';
@@ -28,11 +28,9 @@ type IMyComponentState = {
   maxValue: number
 }
 type IMyComponentProps = {
-  disView: boolean,
-  closeView: any,
-  openView: any,
   contracts: any,
-  provider: any
+  provider: any,
+  buyStake: string
 }
 const renderTitle = (title: string) => (
   <span>
@@ -226,7 +224,7 @@ export class Module extends React.Component<IMyComponentProps, IMyComponentState
     const value = Number(e.target.value);
     this.setState({
       rangStepSize: value,
-      stepSize: value/100 ,
+      stepSize: value / 100,
     });
   };
 
@@ -252,6 +250,7 @@ export class Module extends React.Component<IMyComponentProps, IMyComponentState
           maxValue={this.state.maxValue}
           inputChange={this.handleInputChange}
           refresh
+          buyStake={this.props.buyStake}
         >
           {/*   <span className={`${buySashBond.money} ${buySashBond.block}`}>(2.1ETH    412.32SASH   IN USD $ 16524.12)</span>
                         <span className={`${buySashBond.proportion} ${buySashBond.block}`}>{this.state.stepSize}%</span>
@@ -261,7 +260,7 @@ export class Module extends React.Component<IMyComponentProps, IMyComponentState
         </TradingInterface>
       );
     } else {
-      tradingInterface = <div>Not connected</div>;
+      tradingInterface = <div><Alert type={"error"} message={"There is no provider "}> </Alert></div>;
     }
     return tradingInterface;
   }
@@ -278,7 +277,7 @@ export class Module extends React.Component<IMyComponentProps, IMyComponentState
     const {value, isApprove} = this.state;
     return (
       <div>
-        <div className={styles.headerTitle}>Stake Tokens for DBIT Bonds</div>
+        <div className={styles.headerTitle}>{this.props.buyStake} Tokens for DBIT Bonds</div>
         {this.conditionalTradingInterface()}
 
         {/* <Modal title="Deposit for SASH" visible={this.props.disView} footer={null} onOk={this.props.openView} onCancel={this.props.closeView}>

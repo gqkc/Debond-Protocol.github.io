@@ -46,7 +46,8 @@ type Props = {
   type?: string,
   depositType?: string,
   maxValue?: number,
-  inputChange?: any
+  inputChange?: any,
+  buyStake?:string,
 }
 
 class TradingInterface extends Component<Props> {
@@ -624,7 +625,7 @@ class TradingInterface extends Component<Props> {
             await this.deposit(this.props.depositType as string, address2);
           }}
         >
-          <span className={TradingStyles.text}>DEPOSIT</span>
+          <span >DEPOSIT</span>
         </Button>
       );
     }
@@ -686,7 +687,7 @@ class TradingInterface extends Component<Props> {
         {/* INPUT DOM  */}
         <Loading loading={this.state.loading}/>
         <div className={TradingStyles.input}>
-          <h1 className={TradingStyles.title}>INPUT Ⓘ</h1>
+          <h1 className={TradingStyles.title}>INPUT</h1>
           <Scrollbars className={TradingStyles.currType}>
             {this.renderCurr()}
           </Scrollbars>
@@ -702,7 +703,7 @@ class TradingInterface extends Component<Props> {
                   <div>
                     <h3 className={TradingStyles.titleOutput}>OUTPUT</h3>
                     <Button className={` ${TradingStyles.view}`} onClick={this.handleView}>
-                      <span className={TradingStyles.text}>Buy/Stake Tokens</span>
+                      <span className={TradingStyles.text}>{this.props.buyStake} Tokens</span>
                       <IconFont type="icon-xiangxiajiantou"/>
                     </Button>
                     {this.renderOutput()}

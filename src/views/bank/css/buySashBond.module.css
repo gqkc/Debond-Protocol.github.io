@@ -97,15 +97,19 @@
   background: #403af4 !important;
   border: 1px solid #403af4 !important;
   height: 40px !important;
-
 }
 
 .text {
-  font-size: 20px;
-  vertical-align: middle;
-  line-height: 30px;
-  letter-spacing: 2px;
+  font-family: Inter;
+  font-style: normal;
   font-weight: bold;
+  font-size: 20px;
+  line-height: 146%;
+  /* identical to box height, or 29px */
+
+  /* Debond Grey */
+  color: #DFDFDF;
+  line-height: 146%;
 }
 
 .currType {

@@ -166,13 +166,12 @@
 }
 
 .headerTitle {
-  font-family: Inter;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 20px;
-  line-height: 146%;
+  font-family: Inter!important;
+  font-style: normal!important;
+  font-weight: bold!important;
+  font-size: 20px!important;
   /* identical to box height, or 29px */
 
   /* Debond Grey */
-  color: #DFDFDF;
+  color: #DFDFDF!important;
 }
